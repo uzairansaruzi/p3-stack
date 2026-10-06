@@ -21,6 +21,16 @@ cd p3-stack
 
 `install.sh` links every `skills/*` directory into `~/.agents/skills/`, where T3 Code reads skills. Use `./install.sh --project /path/to/repo` to install into a project's `.agents/skills/` instead.
 
+On Windows, use PowerShell, not `install.sh` (Git Bash copies instead of linking):
+
+```powershell
+git clone https://github.com/uzairansaruzi/p3-stack.git
+cd p3-stack
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+`install.ps1` creates directory junctions, so it needs neither admin rights nor Developer Mode. Use `-Project C:\path\to\repo` to install into a project instead.
+
 ## Get started
 
 1. Run `/setup-p3`. It reads `orchestrator_capabilities` and writes `p3-models.md`, mapping each role (code, judgment, the review panels) to a provider and model you actually have.
