@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Show me your work
 
+Before selecting delegation models, read [model resolution](../setup-p3/model-resolution.md). Profile rules take precedence over the defaults below.
+
 Keep one canonical log.
 
 ## The format

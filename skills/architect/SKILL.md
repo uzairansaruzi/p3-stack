@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Architect
 
+Before selecting delegation models, read [model resolution](../setup-p3/model-resolution.md). Profile rules take precedence over the defaults below.
+
 Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
 
 ## Start

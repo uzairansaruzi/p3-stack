@@ -1,0 +1,32 @@
+# Resolve p3 models
+
+Read this before selecting any delegation target, including fallback models, panel seats, comparison arms, and nested delegates. For profiles, these rules take precedence over a skill's default model choices. Legacy flat files and sessions without configuration retain their existing missing-role defaults and retry rules. Configuration is interpreted by the agent; no T3 parser or enforcement hook is installed.
+
+## Select the file and profile
+
+For nested delegates, retain the owning brief's configuration path and selected profile even if the child changes directories or works outside the repo. Resolve nested roles from that profile rather than selecting a different local configuration. If the supplied configuration cannot be read, stop further delegation.
+
+1. Read `<project-root>/p3-models.md` if present; otherwise read `~/.agents/p3-models.md`. Find the project root with `git rev-parse --show-toplevel`, or use the workspace root outside Git. A project file replaces the global file; do not merge them. With neither file, keep the skill defaults.
+2. A file without `## profile:` sections is the legacy flat format: its role lines apply directly. Missing roles in this format keep their skill defaults for backward compatibility.
+3. For a profile file, read `git remote get-url origin` from the current repo. Normalize scp-style SSH (`git@host:owner/repo.git`), SSH URLs (`ssh://git@host/owner/repo.git`), and HTTPS URLs to `host/owner/repo`: remove scheme, credentials, trailing slash and final `.git`; lowercase the host, preserve path case. In scp-style syntax, the colon separates host from path, not a port. Drop default URL ports (`443` for HTTPS, `22` for SSH); retain nondefault ports as `host:port/path` to distinguish servers. Treat SSH host aliases literally. No origin or no Git repo has no identity and uses the default mapping. A present origin that is a local path, unsupported URL, or cannot be normalized unambiguously requires correction before delegation. Display only the normalized identity, never credentials.
+4. Match that identity against `## projects`. Keys use normalized identities (including ports), either exact or ending in a single `/*`. This is literal prefix matching, not regex or general glob matching: `github.com/acme/*` requires the prefix `github.com/acme/` followed by a nonempty suffix, so it never matches `github.com/acme-other/app`. Other wildcard positions are invalid. Exact matches win; otherwise the longest prefix wins. Use `default:` when none matches or identity is absent. File order does not break ties. Duplicate profile names or mapping keys, unsupported patterns, a missing applicable default, or a reference to an undefined profile require correction before delegation. Do not guess a profile or try another file.
+5. Read only the selected profile's budget and role lines. Names are case-sensitive. Each real role entry specifies its own provider instance ID and model; there is no separate provider list. Duplicate or empty role values require correction. Split each role line at its first `:`; commas in role labels are part of the label. Split panel entries only within the value. No role inherits from another profile or from the legacy global file. Before the first delegation and whenever selection changes, report the config path, normalized identity (or absent origin), matched mapping and selected profile.
+
+## Resolve the role
+
+Call `orchestrator_capabilities` to validate configured targets. Provider IDs identify accounts/configurations: two instances of the same driver are distinct.
+
+- Split a real entry at the first `/`: the left side is the provider instance ID, the entire remainder is the model ID (which may contain `/`). An effort suffix is a space followed by `(<effort>)` at the end of an entry; remove it before splitting provider from model. For profiles, validate every entry and effort against that provider's live catalog; malformed or unavailable entries require correction, not a missing-role fallback. Validate an entire panel list before launching any seat. Repeated panel entries are intentional separate seats; duplicate role lines are ambiguous and invalid.
+- `auto`, `inherit-parent`, and the legacy `inherit` alias mean the parent provider and model. They are explicit choices to use the current parent account, even when the other roles use different accounts. Validate that the parent target is runnable. Use explicit provider/model entries for roles that must stay on a particular account.
+- For a missing role in a profile, stop that delegation and ask to configure it through `setup-p3`. Do not select a provider from other roles, another profile, or the parent as an implicit fallback. Legacy flat files and sessions without configuration keep their skill defaults.
+- Diversity preferences choose among the configured panel entries. For profiles, model race arms must have explicit targets confirmed before launch. If a profile target is rejected after validation, refresh the catalog and retry a valid model only on the same configured provider instance, reporting the substitution. If none exists, stop that seat; do not switch accounts, profiles, or files. Fewer provider families may mean less panel diversity.
+- Pass `target.providerInstanceId` and `target.model` explicitly for real entries, and translate effort to the option ID exposed by the catalog. Omit the target only for validated parent inheritance. Include the configuration path and selected profile in any brief that permits further delegation; the child must apply this resolution too.
+
+## Resolution cases
+
+- `git@github.com:acme/app.git` and `https://github.com/acme/app.git` both match `github.com/acme/*`; linked worktrees resolve identically through the shared origin.
+- `github.com/acme/app: personal` beats `github.com/acme/*: work`. `github.com/acme/team/*` beats `github.com/acme/*` for `github.com/acme/team/app`.
+- No matching mapping or no origin selects the declared default. A present unsupported origin requires correction. A mapping to an undefined profile stops resolution.
+- `https://git.example:8443/team/app.git` keeps `git.example:8443/team/app`; `github.com/acme-other/app` does not match `github.com/acme/*`.
+- A work role with an explicit work provider cannot retry on a personal account. A missing profile role requires configuration. An explicit parent alias follows the parent account by design.
+- A legacy flat project file wins over the global profile file. Converting it to profiles is an explicit setup operation.

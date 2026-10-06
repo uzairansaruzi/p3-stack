@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Swarm
 
+Before selecting delegation models, read [model resolution](../setup-p3/model-resolution.md). Profile rules take precedence over the defaults below.
+
 Fan out N parallel workers. They may cover separate slices, race the same brief, or mix both. The parent waits, aggregates, and returns one report.
 
 ## Start

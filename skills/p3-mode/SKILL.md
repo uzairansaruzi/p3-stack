@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # P3 mode
 
+Before selecting delegation models, read [model resolution](../setup-p3/model-resolution.md). Profile rules take precedence over the defaults below.
+
 Skills are invoked by name (`/p3-mode`). There are no mode toggles.
 
 ## Non-negotiables

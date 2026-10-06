@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Reflect
 
+Before selecting delegation models, read [model resolution](../setup-p3/model-resolution.md). Profile rules take precedence over the defaults below.
+
 Mine the current conversation for durable learnings, then route them into skill edits.
 
 ## When to invoke

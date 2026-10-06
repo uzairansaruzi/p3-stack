@@ -27,6 +27,33 @@ cd p3-stack
 2. Use `/p3-mode` whenever you want rigorous work. It reads the request, picks a playbook, and runs the other skills as the steps need them.
 3. Stuck or unsure which skill fits? Ask `/p3-help`.
 
+## Model profiles
+
+`/setup-p3` defaults to `~/.agents/p3-models.md`. Keep named profiles there and route repos by their Git origin:
+
+```md
+# p3 model configuration
+
+## profile: personal
+# budget: medium (high)
+feature, refactoring: <personalProviderId>/<model> (high)
+
+## profile: work
+# budget: medium (high)
+feature, refactoring: <workProviderId>/<model> (high)
+arena runners: <workProviderId>/<model>, <anotherWorkProviderId>/<model>
+
+## projects
+default: personal
+github.com/acme/*: work
+```
+
+Setup fills the full role table from the live catalog. Each entry names an account-specific provider instance and model directly; no separate provider list is needed. Missing profile roles require configuration, and retries stay on the configured provider instance. Parent aliases explicitly follow the current parent account. These are agent instructions, not a T3-enforced security boundary.
+
+SSH and HTTPS origins normalize to `host/owner/repo`; worktrees share the same routing. Exact mappings beat wildcard mappings; otherwise the longest prefix wins. No match or no origin uses `default`; a present unsupported origin requires correction. Nondefault ports are retained, and wildcards match literal path prefixes. Invalid mappings stop delegation. See [model resolution](skills/setup-p3/model-resolution.md) for the rules.
+
+A project-root `p3-models.md` still replaces the global file. Legacy flat files remain supported; setup previews their migration before writing. Re-running setup edits only the selected profile or mappings, preserving the rest.
+
 ## The mode
 
 `p3-mode` routes every task. Its playbooks: investigation, bug fix, perf issue, hillclimb, runtime forensics, trace forensics, feature, refactoring, prototype, visual parity, authoring a skill, eval, babysit, shipping, autonomous run, orchestrate, autopilot-full, autopilot-stack, session pickup, pause safely, multi-phase plan, worktree cleanup, opening a PR.
