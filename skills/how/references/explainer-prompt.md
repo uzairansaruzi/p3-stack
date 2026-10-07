@@ -12,7 +12,11 @@ You are writing an architectural explanation for a senior engineer. Multiple exp
 
 ## Explorer Findings
 
-{EXPLORER_FINDINGS_ALL}
+Each explorer wrote its full findings to an artifact file. Their bounded reports and artifact paths:
+
+{EXPLORER_REPORTS}
+
+Read every artifact before writing. The artifacts are the evidence; the reports only index them.
 
 ## Instructions
 
@@ -20,7 +24,7 @@ The explorers each investigated a different angle of the same subsystem. Their f
 
 Write an explanation a senior engineer unfamiliar with this area could read and walk away with a solid mental model, understanding the architecture well enough to start working in it confidently.
 
-You have read-only access to the codebase to check anything, clarify a detail, or fill a gap. Inspect only: no writes, no git commands. Use `read`, `grep`, and `glob` as needed. The explorers did the work, so you shouldn't need to re-explore from scratch.
+You have read-only access to the codebase and the explorer artifacts to check anything, clarify a detail, or fill a gap. Inspect only: no writes, no git commands. Use `read`, `grep`, and `glob` as needed. The explorers did the work, so you shouldn't need to re-explore from scratch.
 
 ## Output Format
 

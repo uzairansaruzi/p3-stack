@@ -6,7 +6,7 @@ A skill reads as if it were written for T3 Code first. Keep pstack's sentences v
 
 ## Delegated workers
 
-If you are a delegated worker, your brief names exactly one file. Write only that file, create parent directories as needed, and run no git commands. Report back the file path, its line count, and the changes you made to pstack's version.
+For a single-file porting assignment, the delegated brief names exactly one file. Write only that file, create parent directories as needed, and run no git commands. Report its path, line count, and changes to pstack's version. Other assignments use an outcome-sized scope with explicit write and git permissions.
 
 ## Cursor to T3 Code map
 
@@ -14,8 +14,8 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 |---|---|
 | `Task` tool, `subagent_type`, `run_in_background` | `delegate_task` with a self-contained brief; `mode: "async"` for background work; `task_status` to drain; `task_cancel` to stop |
 | Model slugs (`claude-opus-5-5-max`, `grok-4.7-xhigh-fast`, `gpt-5.6-sol-max`) | Named roles resolved from `orchestrator_capabilities` by `setup-p3` (role names below). Never hardcode a slug. |
-| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Use `t3_thread_launch` only when the worker needs its own top-level thread, worktree, or branch. |
-| "each worker gets its own worktree or branch" | `t3_thread_launch` with `workspaceStrategy`: `{"type":"worktree","baseRef":...,"branch":...}`, `{"type":"existing_worktree","worktreePath":...}`, or `{"type":"root"}`. One writer per worktree. |
+| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Prepare its checkout and name the absolute path in the brief. `t3_thread_launch` requires an explicit user request for a separate top-level conversation. |
+| "each worker gets its own worktree or branch" | Prepare isolated checkouts with the available worktree tooling, then use `delegate_task` with each checkout path and base ref in its brief. One writer per worktree. |
 | `/loop`, poll loops, `scripts/watch-pr` | `watch_pull_request`: T3 watches the PR and wakes the thread on checks finishing, new comments, or conflicts. Arm it, end the turn, triage on wake. For other cadences use `schedule_task`. |
 | Hourly audit ticks, recurring runs | `schedule_task` with `{"type":"interval","everyMs":...}` or `{"type":"fixed_time","timeOfDay":...,"weekdays":[...]}`; `run_scheduled_task_now` for an immediate run. |
 | Stack bookkeeping with `gt`, manual PR lists | `link_pull_request` for every layer, immediately; `list_thread_pull_requests` returns the stack bottom to top. |

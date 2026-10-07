@@ -39,7 +39,7 @@ You MUST follow the framework in `references/epistemics.md`. Read it in full bef
 
 ## Instructions
 
-1. **Read all investigator findings.** They gathered raw evidence, not conclusions. You weigh it.
+1. **Read every investigator artifact named in the bounded reports.** They gathered raw evidence, not conclusions. You weigh it.
 2. **Reconcile overlapping findings.** Multiple investigators may have cited the same PR, ticket, or doc. Merge into a single, authoritative reference.
 3. **Identify contradictions.** If two items of evidence disagree, don't pick one. Surface both.
 4. **Calibrate confidence.** For each claim, identify the evidence and the tier. State Direct claims plainly with a citation. Hedge Inferred claims and explain the inference. Mark Speculative claims explicitly. Put claims with no evidence in the gaps section.

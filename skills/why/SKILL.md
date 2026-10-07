@@ -77,11 +77,11 @@ Source control is always available through git and `gh`. For the other six, clas
 
 Aim for a complete **coverage map**, not a minimal one. Document the null, don't skip the search.
 
-Issue every matching `delegate_task` call (`mode: "async"`) in a single turn so they run concurrently, then drain with `task_status`. Don't ask one investigator to cover multiple MCPs.
+Create a unique scratch directory with `mktemp -d /tmp/why-<slug>-XXXXXX` and assign each investigator its own `<scratch>/<category>.md`. Issue every matching `delegate_task` call (`mode: "async"`) in a single turn so they run concurrently, then drain with `task_status`. Don't ask one investigator to cover multiple MCPs. Before Step 4, confirm every artifact exists and is non-empty (`test -s <path>`); rerun an investigator whose artifact is missing, or record its category as a gap in the coverage map.
 
 Delegation config (each):
 - Provider and model: the `why investigators` line.
-- Every brief stands alone. A T3 child task gets only the brief, never this conversation. T3 child tasks can write, so each brief must say read-only, inspect only, no writes: no file edits, no git mutations, no writes through any MCP.
+- Every brief stands alone. A T3 child task gets only the brief, never this conversation. T3 child tasks can write, so each brief must say source code and external systems are read-only: no source edits, no git mutations, no writes through any MCP. The one write allowed is the investigator's assigned artifact file.
 
 Each investigator brief contains:
 1. The base prompt from `references/investigator-prompt.md`
@@ -89,6 +89,7 @@ Each investigator brief contains:
 3. The cross-cutting `references/sources/incident-postmortem.md` **if the target code looks defensive** (null checks, retry logic, timeout handling, rate limiting, feature flags, egress guards, OOM handlers)
 4. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)
 5. The user's original question
+6. Its exact artifact path. Full findings go there in the template's Output Format; the completion report is at most 300 words: key conclusions, null results, each with its deciding citation, and the artifact path.
 
 ### Investigator roster. One per available evidence category
 
@@ -127,7 +128,7 @@ Delegate one synthesizer with `delegate_task`:
 - Its quality check spot-verifies citations, which can require MCP access. Say read-only, inspect only, no writes in the brief.
 
 The synthesizer brief contains:
-1. The investigator findings, including any null results and any categories skipped with justification
+1. Each investigator's bounded report (conclusions, null results, deciding citations) and verified artifact path as `{ALL_INVESTIGATOR_FINDINGS}`, plus categories skipped with justification. Never paste full reports; the synthesizer reads every artifact.
 2. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)
 3. The user's original question
 4. The epistemics framework from `references/epistemics.md`

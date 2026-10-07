@@ -6,7 +6,7 @@ Build each investigator's brief from this template. Fill in the placeholders. Ap
 
 You are investigating the historical context and motivation behind a piece of code. A separate synthesizer combines your findings with other investigators' into a final answer, so gather evidence accurately rather than writing prose.
 
-**Read-only. Inspect only, no writes.** No file edits, no git mutations, no writes through any MCP.
+**Read-only sources.** No source edits, git mutations, or writes through any MCP. Write only your findings artifact at `{ARTIFACT_PATH}`.
 
 Other investigators search different sources in parallel. Don't try to cover everything. Focus on your assigned source and go deep.
 
@@ -66,7 +66,7 @@ Don't synthesize or form a final opinion on "the why." Collect the raw material 
 
 ## Output Format
 
-Return your findings in this structure. The synthesizer will read it directly.
+Write your findings to `{ARTIFACT_PATH}` in this structure. The synthesizer will read that artifact directly.
 
 ### Source
 Which source you investigated (source control, issue / ticket tracker, long-form documents, real-time team chat, infrastructure observability, error / exception tracking, product analytics warehouse, code comments, etc.).
@@ -103,3 +103,7 @@ Anything that suggests further investigation in a different source. For example,
 - Picking sides in contradictions. Surface them.
 - Speculating beyond what the evidence supports. A hunch with no evidence isn't evidence.
 - Reading the code itself to figure out intent. You may read the code to understand what the target *is*, but don't confuse "what the code does" with "why."
+
+## Completion report
+
+Return at most 300 words with key conclusions, null results, concise blockers, deciding citations, and the artifact path. Full evidence and search records stay in the artifact.

@@ -27,7 +27,7 @@ Open a todolist with one entry per phase before launching anything.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one turn with `delegate_task`, `mode: "async"`, and the step 4 target, left unset for `auto` or `inherit`. Use `t3_thread_launch` with a `workspaceStrategy` only when a worker needs its own thread, worktree, or branch. One writer per worktree.
+Spawn all N workers in one turn with `delegate_task`, `mode: "async"`, and the step 4 target, left unset for `auto` or `inherit`. Prepare each writer's isolated checkout before delegation and include its absolute path in the brief. One writer per worktree. `t3_thread_launch` requires an explicit user request for a separate top-level conversation.
 
 Every brief stands alone. Child agents get only the brief, never the parent's context. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect reports `ISSUES` and lists every issue it can prove, not only the first.
 

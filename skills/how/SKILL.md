@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
-Every spawn below is a `delegate_task` with a self-contained brief; the child gets only the brief, never this conversation. Each brief says it is read-only: inspect only, no writes, no git commands. Resolve each role's model from `p3-models.md` via `orchestrator_capabilities`. Never hardcode a slug. If the role line is missing, run `setup-p3` or use the parent's model.
+Every spawn below is a `delegate_task` with a self-contained brief; the child gets only the brief, never this conversation. Each brief says source code and external systems are read-only: no source edits, no git commands. An explorer writes only its assigned artifact file. Resolve each role's model from `p3-models.md` via `orchestrator_capabilities`. Never hardcode a slug. If the role line is missing, run `setup-p3` or use the parent's model.
 
 ## Step 1. Assess Complexity
 
@@ -23,19 +23,19 @@ When in doubt, take the simple path.
 
 Decompose the question into 2 to 4 exploration angles, each a distinct slice of the subsystem. Spawn all explorers in a single message, `mode: "async"`, model from the `how explorer` role.
 
-Each explorer's brief is `references/explorer-prompt.md` with its angle filled in. Drain with `task_status`, then go to Step 3.
+Before spawning, create a unique scratch directory with `mktemp -d /tmp/how-<slug>-XXXXXX` and assign each explorer its own `<scratch>/explorer-<n>.md`. Each explorer's brief is `references/explorer-prompt.md` with `{QUESTION}`, `{EXPLORATION_ANGLE}`, and that exact `{ARTIFACT_PATH}` filled in. Drain with `task_status`. Before Step 3, confirm every artifact exists and is non-empty (`test -s <path>`); rerun an explorer whose artifact is missing, or carry its angle as an open gap.
 
 ## Step 2b. Direct Explain (simple questions)
 
 Spawn one `delegate_task` that explores and explains in one pass, model from the `how explainer` role.
 
-Build its brief from `references/explainer-prompt.md` without the explorer-findings section. Go to Step 4.
+Build its brief from `references/explainer-prompt.md` without the Explorer Findings section. Go to Step 4.
 
 ## Step 3. Synthesize (complex questions only)
 
 Once all explorers have returned, spawn one `delegate_task` to synthesize their findings into one explanation, model from the `how explainer` role.
 
-Build its brief from `references/explainer-prompt.md` with every explorer's findings filled in.
+Build its brief from `references/explainer-prompt.md`. Fill `{EXPLORER_REPORTS}` with each explorer's angle, bounded report (conclusions, open questions, gaps), and verified artifact path. Never paste full findings; the explainer reads the artifacts.
 
 ## Step 4. Present
 

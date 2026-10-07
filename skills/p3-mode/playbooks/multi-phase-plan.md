@@ -53,7 +53,7 @@ The program runs `skills/p3-mode/playbooks/<execution playbook>.md`. <Who merges
 - [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `playbooks/shipping.md`.>
 
 ### Boot recipe, for every live lane
-Each live lane is a delegated worker at the PR head. Use `t3_thread_launch` with a `workspaceStrategy` for a lane that needs its own worktree. Drive the surface through `preview_*` for browser UIs and `device_*` for simulators.
+Each live lane is a delegated worker at the PR head. Prepare each lane's isolated worktree before delegation and supply its absolute path in the `delegate_task` brief. Drive the surface through `preview_*` for browser UIs and `device_*` for simulators.
 
 - [ ] `git fetch origin <head-branch> && git checkout <head SHA>`.
 - [ ] <Start the backend and the surface. Wait for ready.>
