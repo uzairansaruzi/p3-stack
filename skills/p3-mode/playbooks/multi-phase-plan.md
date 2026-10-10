@@ -41,7 +41,7 @@ The program runs `skills/p3-mode/playbooks/<execution playbook>.md`. <Who merges
 
 ### PR mechanics, for every PR
 - [ ] GitHub CLI (`gh`) is the forge. Never require Graphite (`gt`). Call `link_pull_request` for every PR the moment it opens.
-- [ ] Open the PR ready, never draft, per **Opening a PR**. Use `gh pr create --base <base-branch>`. A stack child targets its parent branch.
+- [ ] Open the PR ready after required local proof by default, per **Opening a PR**. Honor an explicit draft request. Use `gh pr create --base <base-branch>`. A stack child targets its parent branch.
 - [ ] Run the repo's lint and typecheck once before the PR-facing push. Push with hooks on.
 - [ ] Run the **unslop** skill before each commit and the **no-comments** skill before review.
 - [ ] Triage every Bugbot and security-reviewer comment per `../references/bugbot-triage.md`.
@@ -53,7 +53,7 @@ The program runs `skills/p3-mode/playbooks/<execution playbook>.md`. <Who merges
 - [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `playbooks/shipping.md`.>
 
 ### Boot recipe, for every live lane
-Each live lane is a delegated worker at the PR head. Use `t3_thread_launch` with a `workspaceStrategy` for a lane that needs its own worktree. Drive the surface through `preview_*` for browser UIs and `device_*` for simulators.
+Each live lane is a delegated worker at the PR head. The parent prepares each isolated worktree and names its absolute path in the `delegate_task` brief. CLI cwd does not change the inherited T3 binding. Check that binding before using project-default tools. Report a binding limitation to the parent. Use `t3_thread_launch` only for an explicitly requested independent top-level conversation. Drive the surface through `preview_*` for browser UIs and `device_*` for simulators.
 
 - [ ] `git fetch origin <head-branch> && git checkout <head SHA>`.
 - [ ] <Start the backend and the surface. Wait for ready.>

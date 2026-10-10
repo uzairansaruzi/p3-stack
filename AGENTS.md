@@ -6,7 +6,7 @@ A skill reads as if it were written for T3 Code first. Keep pstack's sentences v
 
 ## Delegated workers
 
-If you are a delegated worker, your brief names exactly one file. Write only that file, create parent directories as needed, and run no git commands. Report back the file path, its line count, and the changes you made to pstack's version.
+If you are a delegated worker, follow the file scope and git permissions in your brief. Use the working directory assigned by the parent. Report the changed files, verification receipts, and unresolved findings.
 
 ## Cursor to T3 Code map
 
@@ -14,8 +14,8 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 |---|---|
 | `Task` tool, `subagent_type`, `run_in_background` | `delegate_task` with a self-contained brief; `mode: "async"` for background work; `task_status` to drain; `task_cancel` to stop |
 | Model slugs (`claude-opus-5-5-max`, `grok-4.7-xhigh-fast`, `gpt-5.6-sol-max`) | Named roles resolved from `orchestrator_capabilities` by `setup-p3` (role names below). Never hardcode a slug. |
-| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Use `t3_thread_launch` only when the worker needs its own top-level thread, worktree, or branch. |
-| "each worker gets its own worktree or branch" | `t3_thread_launch` with `workspaceStrategy`: `{"type":"worktree","baseRef":...,"branch":...}`, `{"type":"existing_worktree","worktreePath":...}`, or `{"type":"root"}`. One writer per worktree. |
+| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task through `delegate_task`. Use `t3_thread_launch` only when the user explicitly requests an independent top-level conversation. |
+| "each worker gets its own worktree or branch" | The parent prepares an isolated directory or git worktree and names its absolute path in the `delegate_task` brief. One writer per worktree. A directory alone does not authorize a new conversation. |
 | `/loop`, poll loops, `scripts/watch-pr` | `watch_pull_request`: T3 watches the PR and wakes the thread on checks finishing, new comments, or conflicts. Arm it, end the turn, triage on wake. For other cadences use `schedule_task`. |
 | Hourly audit ticks, recurring runs | `schedule_task` with `{"type":"interval","everyMs":...}` or `{"type":"fixed_time","timeOfDay":...,"weekdays":[...]}`; `run_scheduled_task_now` for an immediate run. |
 | Stack bookkeeping with `gt`, manual PR lists | `link_pull_request` for every layer, immediately; `list_thread_pull_requests` returns the stack bottom to top. |
@@ -27,6 +27,16 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 | Cursor custom modes ("press option+enter") | Skills are invoked by name (`/p3-mode`). No mode toggles. |
 
 Everything else in pstack transfers as written: the principles, the playbook shapes, the brief template, the reply style, the autonomy rules. Adopt it.
+
+## Orchestration contract
+
+Use `delegate_task` for child tasks owned by this conversation. Use `t3_thread_launch` or `create_threads` only when the user explicitly requests an independent top-level conversation. A directory, branch, worktree, or runtime requirement alone does not authorize one.
+
+Delegated children inherit the parent thread's T3 workspace binding. `delegate_task` has no workspace argument. The parent prepares isolated directories or git worktrees and names their absolute paths in each brief. Workers pass the assigned directory as the CLI cwd. Changing cwd does not change the T3 binding. Check that binding before using project-default tools. Report a binding limitation to the parent when a tool cannot target the assigned workspace.
+
+For an explicitly requested independent conversation, `t3_thread_launch` binds the workspace before the agent starts. Choose `workspaceStrategy` from its current tool schema. Keep one writer per worktree in either workflow.
+
+Open PRs ready after required local proof by default. Honor an explicit draft request and keep that PR draft until the user asks to mark it ready.
 
 ## Role names
 

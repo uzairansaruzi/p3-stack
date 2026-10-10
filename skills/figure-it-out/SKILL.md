@@ -28,7 +28,7 @@ Decompose into atomic, independently-landable units. Sequence riskiest-unknown-f
 
 - Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as "old value vs new value".
 - For one-way-door design decisions, run the **architect** skill (it runs **arena**). Skip it for mechanical work whose shape is already concrete. A second arena over a settled design is over-engineering (the **laziness-protocol** principle skill).
-- Decide what fans out. Parallelize only across seams, and give each writer its own worktree via `t3_thread_launch` with a `workspaceStrategy`, one writer per worktree (the **separate-before-serializing-shared-state** principle skill). Don't over-fan.
+- Decide what fans out. Parallelize only across seams, and have the parent prepare each writer's worktree and name its absolute path in the `delegate_task` brief. CLI cwd does not change the inherited T3 binding. Follow the [orchestration contract](../p3-mode/SKILL.md#subagents). Use `t3_thread_launch` only for an explicitly requested independent top-level conversation. Keep one writer per worktree (the **separate-before-serializing-shared-state** principle skill). Don't over-fan.
 - Every `delegate_task` brief stands alone: the child gets only the brief, never your context. Read-only workers get a brief that says read-only, inspect only, no writes. Resolve models from named roles in `p3-models.md` via `orchestrator_capabilities`; never hardcode a slug.
 - Write the designed phase list down. That list is what the human reviews.
 
