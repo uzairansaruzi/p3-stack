@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Mine the current conversation for durable learnings, then route them into skill edits.
 
+Apply the [shared usage policy](../p3-mode/references/usage-policy.md) before delegation. Reserve this workflow's worker starts and review rounds in the parent phase, including descendants. Prepend its resolved path, scope, verification gate, allocated limits, and child permission to every role brief. Workers are leaves unless the parent allocates named child work.
+
 ## When to invoke
 
 Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.

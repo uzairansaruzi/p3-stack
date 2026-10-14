@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Fan out N parallel workers. They may cover separate slices, race the same brief, or mix both. The parent waits, aggregates, and returns one report.
 
+Apply the [shared usage policy](../p3-mode/references/usage-policy.md) before delegation. Reserve this workflow's worker starts and review rounds in the parent phase, including descendants. Prepend its resolved path, scope, verification gate, allocated limits, and child permission to every role brief. Workers are leaves unless the parent allocates named child work.
+
 ## Start
 
 Open a todolist with one entry per phase before launching anything.
@@ -27,7 +29,7 @@ Open a todolist with one entry per phase before launching anything.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one turn with `delegate_task`, `mode: "async"`, and the step 4 target, left unset for `auto` or `inherit`. Use `t3_thread_launch` with a `workspaceStrategy` only when a worker needs its own thread, worktree, or branch. One writer per worktree.
+Spawn all N workers in one turn with `delegate_task`, `mode: "async"`, and the step 4 target, left unset for `auto` or `inherit`. Separate each writer's files or worktree before delegation. Ordinary top-level threads require an explicit user request.
 
 Every brief stands alone. Child agents get only the brief, never the parent's context. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect reports `ISSUES` and lists every issue it can prove, not only the first.
 

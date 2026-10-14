@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
 
+Apply the [shared usage policy](../p3-mode/references/usage-policy.md) before delegation. Reserve this workflow's worker starts and review rounds in the parent phase, including descendants. Prepend its resolved path, scope, verification gate, allocated limits, and child permission to every role brief. Workers are leaves unless the parent allocates named child work.
+
 ## Start
 
 Open a todolist with one entry per phase before starting.

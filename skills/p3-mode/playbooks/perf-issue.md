@@ -4,6 +4,7 @@
 
 1. Capture a baseline trace via the matching `preview_*` or `device_*` tools. Vet the baseline, and each later number, with the **benchmark-checklist** skill.
 2. `how` to ground hypotheses. Don't claim a perf ceiling without running it first.
+   Set experiment allowances and the done predicate under the [usage policy](../references/usage-policy.md). Batch cases in a durable script, report compact results, and resume on completion rather than tailing unchanged logs.
    Try the performance mantras in order, cheapest first:
    1. Don't do it. Stop work whose result nothing uses rather than cheapening it.
    2. Do it, but don't do it again.

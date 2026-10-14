@@ -10,9 +10,13 @@ Explore the codebase to answer "how does X work?" questions. Produce architectur
 
 Every spawn below is a `delegate_task` with a self-contained brief; the child gets only the brief, never this conversation. Each brief says it is read-only: inspect only, no writes, no git commands. Resolve each role's model from `p3-models.md` via `orchestrator_capabilities`. Never hardcode a slug. If the role line is missing, run `setup-p3` or use the parent's model.
 
+Apply the [shared usage policy](../p3-mode/references/usage-policy.md) before delegation. Reserve this workflow's worker starts and review rounds in the parent phase, including descendants. Prepend its resolved path, scope, verification gate, allocated limits, and child permission to every role brief. Workers are leaves unless the parent allocates named child work.
+
 ## Step 1. Assess Complexity
 
 If the scope is ambiguous, state your interpretation and explore. The user can redirect.
+
+If the current conversation already contains a verified explanation of the same scope, reuse it and answer directly. Delegate only for a new question or missing evidence.
 
 - **Simple** (a single module, a small utility, a narrow question such as "how does function X work"): no explorers. One explainer explores and explains in a single pass. Go to Step 2b.
 - **Complex** (a subsystem spanning multiple files or services, a cross-cutting feature, a full architectural overview): spawn parallel explorers first, then hand off to the explainer. Go to Step 2a.
