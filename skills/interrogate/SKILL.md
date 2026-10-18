@@ -38,7 +38,7 @@ Launch all reviewers in a single turn, one `delegate_task` per reviewer with `mo
 For each reviewer:
 - The brief is self-contained. A delegated reviewer gets only the brief, never your context.
 - The brief says read-only: inspect only, no writes, no git commands that change state.
-- For an `auto` or `inherit-parent` entry, omit the model so that reviewer runs on the parent model.
+- For an `auto` entry, omit the model so that reviewer runs on the parent model.
 
 If `delegate_task` rejects a configured entry, say so and run that reviewer on the closest available model of the same family from `orchestrator_capabilities`. Do not block the review on it.
 
