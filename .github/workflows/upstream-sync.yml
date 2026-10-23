@@ -1,0 +1,312 @@
+name: Upstream sync
+
+on:
+  schedule:
+    # Daily at 09:17 UTC. Schedules only run on the default branch.
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Detect and report only (no Claude adaptation, no PR)"
+        type: boolean
+        default: false
+      force:
+        description: "Re-run even when a sync PR for this upstream head is already open"
+        type: boolean
+        default: false
+      max_turns:
+        description: "Max Claude turns for the adaptation run"
+        type: string
+        default: "240"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+env:
+  HAS_API_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+  HAS_OAUTH: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.detect.outputs.status }}
+      head_sha: ${{ steps.detect.outputs.head_sha }}
+      head_short: ${{ steps.detect.outputs.head_short }}
+      base_short: ${{ steps.detect.outputs.base_short }}
+      branch: ${{ steps.detect.outputs.branch }}
+      commits: ${{ steps.detect.outputs.commits }}
+      changes: ${{ steps.detect.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Detect upstream changes
+        id: detect
+        run: |
+          node scripts/upstream/detect.mjs --write | tee detect-outputs.txt
+          {
+            echo "## Upstream sync detection"
+            echo '```'
+            cat detect-outputs.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload detect report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-detect-report
+          path: .upstream-sync/reports/
+          if-no-files-found: ignore
+      - name: Guard against rewritten upstream history
+        if: steps.detect.outputs.status == 'upstream-history-rewritten'
+        run: |
+          echo "The tracked baseline is no longer an ancestor of upstream HEAD. Rebase the baseline manually (see docs/upstream-sync.md, Troubleshooting)." >> "$GITHUB_STEP_SUMMARY"
+          exit 1
+
+  sync:
+    needs: detect
+    if: needs.detect.outputs.status == 'changes-detected' && inputs.dry_run != true
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Materialize the detect report
+        run: node scripts/upstream/detect.mjs --write > /dev/null
+
+      - name: Idempotency check
+        id: idem
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ needs.detect.outputs.branch }}
+        run: |
+          open_same=$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')
+          if [ "$open_same" -gt 0 ] && [ "${{ inputs.force }}" != "true" ]; then
+            echo "skip_pr_exists=true" >> "$GITHUB_OUTPUT"
+            {
+              echo "## Upstream sync: PR already open"
+              echo "An open PR for \`$BRANCH\` covers upstream head ${{ needs.detect.outputs.head_short }}. Nothing to do."
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "skip_pr_exists=false" >> "$GITHUB_OUTPUT"
+            # Close stale sync PRs for older upstream heads; they are superseded.
+            while IFS=$'\t' read -r number head; do
+              [ -z "$number" ] && continue
+              echo "Closing superseded sync PR #$number ($head)"
+              gh pr close "$number" --comment "Superseded: a newer upstream head (${{ needs.detect.outputs.head_short }}) was detected. A fresh sync PR replaces this one."
+            done < <(gh pr list --label upstream-sync --state open --json number,headRefName --jq '.[] | [.number, .headRefName] | @tsv')
+          fi
+
+      - name: Create sync branch
+        if: steps.idem.outputs.skip_pr_exists != 'true'
+        run: |
+          git config user.name "p3-sync-bot"
+          git config user.email "actions@github.com"
+          git checkout -B "${{ needs.detect.outputs.branch }}"
+
+      # ------------------------------------------------------------------
+      # Adaptation via the official Claude Code GitHub Action.
+      # Strict tool allowlist: Claude can only read, search, and write
+      # files. No Bash, no git, no gh, no node — upstream scripts can
+      # never be executed and nothing can be pushed from this step.
+      # ------------------------------------------------------------------
+      - name: Adapt upstream changes (API key)
+        id: adapt_api
+        if: steps.idem.outputs.skip_pr_exists != 'true' && env.HAS_API_KEY == 'true' && inputs.dry_run != true
+        uses: anthropics/claude-code-action@v1
+        continue-on-error: true
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ github.token }}
+          claude_args: >-
+            --max-turns ${{ inputs.max_turns || '240' }}
+            --allowedTools "Read,Write,Edit,MultiEdit,Glob,Grep,WebFetch,WebSearch,TodoWrite,NotebookRead,NotebookEdit"
+          prompt: |
+            You are porting upstream changes from poteto's pstack into p3-stack, its T3 Code adaptation, inside this repository checkout.
+
+            Read these first, in order, and follow them exactly:
+            1. AGENTS.md — the contributor guide. Its Cursor-to-T3 map, writing rules, layout, role names, and definition of done are binding.
+            2. .upstream-sync/config.json — path mapping and documented exclusions.
+            3. .upstream-sync/reports/detect-${{ needs.detect.outputs.head_short }}.json — every upstream change, with its mapped p3-stack path (portPath) and classification (action).
+
+            Rules of engagement:
+            - Adapt every change whose action is "port" or "scripts" into its mapped p3-stack path; create parent directories for new files. Keep pstack's sentences verbatim wherever they still apply; cut Cursor-only mechanics per the AGENTS.md map.
+            - "scripts" files (anything under skills/*/scripts/): copy content verbatim except strip or rework Cursor-specific references. NEVER execute any script, build, or install command; you have no shell access by design.
+            - If the report shows an upstream deletion or rename, apply the matching deletion/rename to the mapped p3-stack path.
+            - The ONLY T3 tool names you may write are those in AGENTS.md's "T3 tool quick reference". If an upstream change needs a T3 mechanism not listed there, do NOT invent one: leave that part unchanged and record the item as "manual" in the dispositions with a note naming what is needed.
+            - Do not modify AGENTS.md, install.sh, .github/**, scripts/upstream/**, .upstream-sync/config.json, or .upstream-sync/state.json. You may update README.md only to add or remove entries in its Skills and Principles lists.
+            - Never hardcode a model name or version; roles resolve through p3-models.md per AGENTS.md.
+            - Frontmatter for every new or edited SKILL.md: name matches the directory, a one-line description, disable-model-invocation: true where the source has it, and no Cursor UI fields.
+
+            When finished, write the dispositions file .upstream-sync/reports/dispositions-${{ needs.detect.outputs.head_short }}.json containing a JSON array. Every upstream path in the report whose action is "port" or "scripts" gets exactly one entry:
+            {"upstreamPath": "<exactly as in the report>", "disposition": "ported" | "not-applicable" | "manual", "note": "<one sentence: what you did, why it does not apply, or what a human must decide>"}
+            - "ported": you applied it, and the mapped portPath file must actually have changed.
+            - "not-applicable": pure Cursor mechanics with no T3 meaning; explain.
+            - "manual": needs a human decision or a missing T3 mechanism; explain precisely.
+
+            The validator (scripts/upstream/validate.mjs) checks all of this mechanically afterwards. Satisfy it honestly; do not game it. When you are done, reply with a two-paragraph summary: what was ported, and what needs humans.
+      - name: Adapt upstream changes (OAuth token)
+        id: adapt_oauth
+        if: steps.idem.outputs.skip_pr_exists != 'true' && env.HAS_API_KEY != 'true' && env.HAS_OAUTH == 'true' && inputs.dry_run != true
+        uses: anthropics/claude-code-action@v1
+        continue-on-error: true
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
+          claude_args: >-
+            --max-turns ${{ inputs.max_turns || '240' }}
+            --allowedTools "Read,Write,Edit,MultiEdit,Glob,Grep,WebFetch,WebSearch,TodoWrite,NotebookRead,NotebookEdit"
+          prompt: |
+            You are porting upstream changes from poteto's pstack into p3-stack, its T3 Code adaptation, inside this repository checkout.
+
+            Read these first, in order, and follow them exactly:
+            1. AGENTS.md — the contributor guide. Its Cursor-to-T3 map, writing rules, layout, role names, and definition of done are binding.
+            2. .upstream-sync/config.json — path mapping and documented exclusions.
+            3. .upstream-sync/reports/detect-${{ needs.detect.outputs.head_short }}.json — every upstream change, with its mapped p3-stack path (portPath) and classification (action).
+
+            Rules of engagement:
+            - Adapt every change whose action is "port" or "scripts" into its mapped p3-stack path; create parent directories for new files. Keep pstack's sentences verbatim wherever they still apply; cut Cursor-only mechanics per the AGENTS.md map.
+            - "scripts" files (anything under skills/*/scripts/): copy content verbatim except strip or rework Cursor-specific references. NEVER execute any script, build, or install command; you have no shell access by design.
+            - If the report shows an upstream deletion or rename, apply the matching deletion/rename to the mapped p3-stack path.
+            - The ONLY T3 tool names you may write are those in AGENTS.md's "T3 tool quick reference". If an upstream change needs a T3 mechanism not listed there, do NOT invent one: leave that part unchanged and record the item as "manual" in the dispositions with a note naming what is needed.
+            - Do not modify AGENTS.md, install.sh, .github/**, scripts/upstream/**, .upstream-sync/config.json, or .upstream-sync/state.json. You may update README.md only to add or remove entries in its Skills and Principles lists.
+            - Never hardcode a model name or version; roles resolve through p3-models.md per AGENTS.md.
+            - Frontmatter for every new or edited SKILL.md: name matches the directory, a one-line description, disable-model-invocation: true where the source has it, and no Cursor UI fields.
+
+            When finished, write the dispositions file .upstream-sync/reports/dispositions-${{ needs.detect.outputs.head_short }}.json containing a JSON array. Every upstream path in the report whose action is "port" or "scripts" gets exactly one entry:
+            {"upstreamPath": "<exactly as in the report>", "disposition": "ported" | "not-applicable" | "manual", "note": "<one sentence: what you did, why it does not apply, or what a human must decide>"}
+            - "ported": you applied it, and the mapped portPath file must actually have changed.
+            - "not-applicable": pure Cursor mechanics with no T3 meaning; explain.
+            - "manual": needs a human decision or a missing T3 mechanism; explain precisely.
+
+            The validator (scripts/upstream/validate.mjs) checks all of this mechanically afterwards. Satisfy it honestly; do not game it. When you are done, reply with a two-paragraph summary: what was ported, and what needs humans.
+
+      - name: Initial mode decision
+        id: mode
+        if: steps.idem.outputs.skip_pr_exists != 'true'
+        run: |
+          if [ "${{ steps.adapt_api.outcome }}" = "success" ] || [ "${{ steps.adapt_oauth.outcome }}" = "success" ]; then
+            mode=adapted
+          elif [ "${{ steps.adapt_api.outcome }}" = "failure" ] || [ "${{ steps.adapt_oauth.outcome }}" = "failure" ]; then
+            echo "::warning::Claude adaptation failed; falling back to report-only"
+            mode=report-only
+          else
+            echo "::notice::No Claude credentials configured (or dry run); producing a reviewable change report instead"
+            mode=report-only
+          fi
+          if [ "$mode" = adapted ] && [ ! -f ".upstream-sync/reports/dispositions-${{ needs.detect.outputs.head_short }}.json" ]; then
+            echo "::warning::Claude did not write the dispositions file; falling back to report-only"
+            mode=report-only
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+
+      - name: Advance state and validate (adapted mode)
+        id: validate
+        if: steps.mode.outputs.mode == 'adapted'
+        continue-on-error: true
+        run: |
+          node scripts/upstream/advance-state.mjs "${{ needs.detect.outputs.head_sha }}" \
+            --summary "Automated sync PR for upstream ${{ needs.detect.outputs.head_short }} (${{ needs.detect.outputs.commits }} commits)."
+          node scripts/upstream/validate.mjs \
+            --base origin/main \
+            --report ".upstream-sync/reports/detect-${{ needs.detect.outputs.head_short }}.json" \
+            --dispositions ".upstream-sync/reports/dispositions-${{ needs.detect.outputs.head_short }}.json" \
+            --expect-state-advance "${{ needs.detect.outputs.head_sha }}" \
+            --full \
+            --out ".upstream-sync/reports/validation-${{ needs.detect.outputs.head_short }}.json"
+
+      - name: Finalize mode (fall back to report-only when validation fails)
+        id: final
+        if: steps.idem.outputs.skip_pr_exists != 'true'
+        run: |
+          mode="${{ steps.mode.outputs.mode }}"
+          if [ "$mode" = "adapted" ] && [ "${{ steps.validate.outcome }}" = "failure" ]; then
+            echo "::warning::Validation failed; discarding the adaptation and producing a report-only PR"
+            cp ".upstream-sync/reports/detect-${{ needs.detect.outputs.head_short }}.json" "$RUNNER_TEMP/detect-keep.json"
+            if [ -f ".upstream-sync/reports/validation-${{ needs.detect.outputs.head_short }}.json" ]; then
+              cp ".upstream-sync/reports/validation-${{ needs.detect.outputs.head_short }}.json" "$RUNNER_TEMP/validation-keep.json"
+            fi
+            git reset --hard HEAD
+            git clean -fd
+            mkdir -p .upstream-sync/reports
+            cp "$RUNNER_TEMP/detect-keep.json" ".upstream-sync/reports/detect-${{ needs.detect.outputs.head_short }}.json"
+            if [ -f "$RUNNER_TEMP/validation-keep.json" ]; then
+              cp "$RUNNER_TEMP/validation-keep.json" ".upstream-sync/reports/validation-${{ needs.detect.outputs.head_short }}.json"
+            fi
+            mode=report-only
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "## Upstream sync mode: $mode" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit and push sync branch
+        id: push
+        if: steps.idem.outputs.skip_pr_exists != 'true'
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "::error::Nothing to commit; the sync produced no changes."
+            exit 1
+          fi
+          git add -A
+          if [ "${{ steps.final.outputs.mode }}" = "adapted" ]; then
+            git commit -m "sync: port upstream pstack ${{ needs.detect.outputs.base_short }}..${{ needs.detect.outputs.head_short }} (${{ needs.detect.outputs.commits }} commits, adapted)"
+          else
+            git commit -m "sync: report upstream pstack changes through ${{ needs.detect.outputs.head_short }} (report-only)"
+          fi
+          git push --force-with-lease origin "${{ needs.detect.outputs.branch }}"
+
+      - name: Render PR body
+        if: steps.push.outcome == 'success'
+        run: |
+          ARGS=(--report ".upstream-sync/reports/detect-${{ needs.detect.outputs.head_short }}.json" --mode "${{ steps.final.outputs.mode }}")
+          if [ "${{ steps.final.outputs.mode }}" = "adapted" ] && [ -f ".upstream-sync/reports/dispositions-${{ needs.detect.outputs.head_short }}.json" ]; then
+            ARGS+=(--dispositions ".upstream-sync/reports/dispositions-${{ needs.detect.outputs.head_short }}.json")
+          fi
+          if [ -f ".upstream-sync/reports/validation-${{ needs.detect.outputs.head_short }}.json" ]; then
+            ARGS+=(--validation ".upstream-sync/reports/validation-${{ needs.detect.outputs.head_short }}.json")
+          fi
+          node scripts/upstream/render-pr-body.mjs "${ARGS[@]}" > pr-body.md
+          cat pr-body.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create or update the sync PR
+        if: steps.push.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ needs.detect.outputs.branch }}
+        run: |
+          gh label create upstream-sync --description "Automated upstream pstack synchronization" --color 0E8A16 2>/dev/null || true
+          gh label create report-only --description "Change report without automated adaptation" --color FBCA04 2>/dev/null || true
+          MODE="${{ steps.final.outputs.mode }}"
+          TITLE="sync: upstream pstack through ${{ needs.detect.outputs.head_short }} (${{ needs.detect.outputs.commits }} commits)"
+          LABELS="upstream-sync"
+          if [ "$MODE" = "report-only" ]; then
+            TITLE="$TITLE [report-only]"
+            LABELS="$LABELS,report-only"
+          fi
+          if gh pr view "$BRANCH" > /dev/null 2>&1; then
+            gh pr edit "$BRANCH" --title "$TITLE" --body-file pr-body.md
+          else
+            gh pr create --head "$BRANCH" --title "$TITLE" --body-file pr-body.md --label "$LABELS"
+          fi
+          gh pr view "$BRANCH" --json url --jq .url >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload sync artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-sync-reports
+          path: .upstream-sync/reports/
+          if-no-files-found: ignore

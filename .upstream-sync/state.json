@@ -1,0 +1,10 @@
+{
+  "upstream_repo": "https://github.com/cursor/plugins.git",
+  "upstream_dir": "pstack",
+  "upstream_branch": "main",
+  "last_integrated_sha": "4e5b1cf2ccb0ea3716f08c8ee0a5856b5ab93536",
+  "last_integrated_date": "2026-10-04",
+  "last_integrated_note": "Initial baseline. The T3 port (commit 09909eb, 2026-10-05 00:40-07:00) derives from this upstream tree: 51/51 skills ported, no upstream pstack commit existed between this SHA and the port. Later upstream commits are pending, not synchronized.",
+  "updated_at": null,
+  "history": []
+}

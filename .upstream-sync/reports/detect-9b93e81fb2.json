@@ -1,0 +1,1730 @@
+{
+  "status": "changes-detected",
+  "generatedAt": "2026-10-23T01:12:13.565Z",
+  "upstream": {
+    "repo": "https://github.com/cursor/plugins.git",
+    "branch": "main",
+    "dir": "pstack"
+  },
+  "base": {
+    "sha": "4e5b1cf2ccb0ea3716f08c8ee0a5856b5ab93536",
+    "short": "4e5b1cf2cc",
+    "date": "2026-10-04"
+  },
+  "head": {
+    "sha": "9b93e81fb2921b9263d9463c15bafeabfe3903aa",
+    "short": "9b93e81fb2"
+  },
+  "branch": "sync/upstream-9b93e81fb2",
+  "commitCount": 54,
+  "commits": [
+    {
+      "sha": "4ec7ffa173eaa70d3d9467a627baf0954645a353",
+      "short": "4ec7ffa",
+      "date": "2026-10-22",
+      "subject": "refactor(pstack): delete statechart comments that repeat the code, and rename helpers (#779)"
+    },
+    {
+      "sha": "7698375f92a729f8bb89d113c633dce9ff9dc6db",
+      "short": "7698375",
+      "date": "2026-10-22",
+      "subject": "fix(pstack): bring the statechart skill up to date with six fixes (#776)"
+    },
+    {
+      "sha": "eb4db2b55b2b7dec3d9282754cddf0a56bf4ff10",
+      "short": "eb4db2b",
+      "date": "2026-10-21",
+      "subject": "feat(pstack): add the statechart skill to draw TLA+ models as charts (#741)"
+    },
+    {
+      "sha": "88d47514b82e7c44f00f2b2a72ff6dd12158038c",
+      "short": "88d4751",
+      "date": "2026-10-19",
+      "subject": "pstack: restore /sharpen to the original prompt, return only the rewrite (#729)"
+    },
+    {
+      "sha": "d457567332aa6989e753ea289f30ea2bfbc80bc0",
+      "short": "d457567",
+      "date": "2026-10-19",
+      "subject": "chore(pstack): bump to 0.15.28, sync guide with create-formal-verification-skill (#724)"
+    },
+    {
+      "sha": "7b353f78f6ec193bdbe48ed8059444eb09b6878e",
+      "short": "7b353f7",
+      "date": "2026-10-19",
+      "subject": "pstack: add maintain-formal-verification-skill (#716)"
+    },
+    {
+      "sha": "6b78e9f4e46c75d1697d837e51f07c2692e60b24",
+      "short": "6b78e9f",
+      "date": "2026-10-19",
+      "subject": "fix(pstack): add TLA+ default and no-verifier fallback to create-formal-verification-skill (#721)"
+    },
+    {
+      "sha": "f9be7aa00c2b2bf4b13562143a6918445e06b99d",
+      "short": "f9be7aa",
+      "date": "2026-10-18",
+      "subject": "pstack: offer formal verification in setup, sync help and guide (#715)"
+    },
+    {
+      "sha": "0148b78c56c72a1b8412055913c79f767095b217",
+      "short": "0148b78",
+      "date": "2026-10-18",
+      "subject": "chore(pstack): bump to 0.15.27 (#713)"
+    },
+    {
+      "sha": "75fabace38ce507ee044546eaca64167c8c1e21b",
+      "short": "75fabac",
+      "date": "2026-10-18",
+      "subject": "pstack: drop the rewritten-prompt ban from sharpen (#712)"
+    },
+    {
+      "sha": "0b8e952052d482ee6de06deebf14d590d77b1b34",
+      "short": "0b8e952",
+      "date": "2026-10-18",
+      "subject": "chore(pstack): bump to 0.15.26 (#710)"
+    },
+    {
+      "sha": "4382e687a50b8d2c5ce4d141d001186589cff8d5",
+      "short": "4382e68",
+      "date": "2026-10-17",
+      "subject": "feat(pstack): add /create-formal-verification-skill (#709)"
+    },
+    {
+      "sha": "bc1443790cc980d0ea857663260a831299884508",
+      "short": "bc14437",
+      "date": "2026-10-17",
+      "subject": "fix(pstack): say outright that ketchup never cuts items to stay under a word count (#708)"
+    },
+    {
+      "sha": "16541c6bc1ed6c8d808b2f78a33364003e82b967",
+      "short": "16541c6",
+      "date": "2026-10-17",
+      "subject": "fix(pstack): list every waiting item so each ketchup call is decidable (#692)"
+    },
+    {
+      "sha": "019a6a20592c10bf92869e5740368f578a9997fd",
+      "short": "019a6a2",
+      "date": "2026-10-17",
+      "subject": "pstack: refresh the docs and add a docs-vs-tree check (#704)"
+    },
+    {
+      "sha": "1b800800583ee8ff7f2676caf7a5cb7f0804be85",
+      "short": "1b80080",
+      "date": "2026-10-17",
+      "subject": "fix(pstack): close three gaps in the Claude Code plugin (#705)"
+    },
+    {
+      "sha": "a968159326d1fc6b7d483491ec5c457986a20af2",
+      "short": "a968159",
+      "date": "2026-10-17",
+      "subject": "fix(pstack): name every skill after its folder (#702)"
+    },
+    {
+      "sha": "0317eb8b858c991c57721358daaee19dbe8c814d",
+      "short": "0317eb8",
+      "date": "2026-10-17",
+      "subject": "fix(pstack): make a brand with a type guard, not as (#700)"
+    },
+    {
+      "sha": "182f2ce414e83224915c190d2f63239c1608d0a5",
+      "short": "182f2ce",
+      "date": "2026-10-16",
+      "subject": "feat(pstack): install pstack in Claude Code from a generated tree (#637)"
+    },
+    {
+      "sha": "99743e9c151c8537cbbf1f98bb38f34ef3368453",
+      "short": "99743e9",
+      "date": "2026-10-15",
+      "subject": "refactor(pstack): cut marginal sections from four skills (#634)"
+    },
+    {
+      "sha": "e5136d82418d2db3165ea1050d17577cd618cc05",
+      "short": "e5136d8",
+      "date": "2026-10-15",
+      "subject": "pstack: restate four overspecified principles as reasoning, not rules (#633)"
+    },
+    {
+      "sha": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
+      "short": "6ce45c5",
+      "date": "2026-10-14",
+      "subject": "chore(pstack): bump to 0.15.25 (#614)"
+    },
+    {
+      "sha": "afd51cf66a3100a95f878d6c4b93a01f6508e3b0",
+      "short": "afd51cf",
+      "date": "2026-10-14",
+      "subject": "feat(pstack): have /ketchup explain changes with screenshots, videos, and diagrams (#628)"
+    },
+    {
+      "sha": "1e5c90a4b6f249917bd21fe361b3a2a7deb741b8",
+      "short": "1e5c90a",
+      "date": "2026-10-14",
+      "subject": "chore(pstack): bump to 0.15.24 (#617)"
+    },
+    {
+      "sha": "79afd75d5bd51383fbb526b72f36db03180b8301",
+      "short": "79afd75",
+      "date": "2026-10-13",
+      "subject": "feat(pstack): add /sharpen (#615)"
+    },
+    {
+      "sha": "8043881e5cbb962f8948d1a1f8f8e28089d67c9a",
+      "short": "8043881",
+      "date": "2026-10-13",
+      "subject": "pstack: autopilot loops catch the operator up with /ketchup (#616)"
+    },
+    {
+      "sha": "ce649c03ac3b75b6ae80cbd15b7e2c536caedb5a",
+      "short": "ce649c0",
+      "date": "2026-10-14",
+      "subject": "feat(pstack): match subagent effort to the job, drop Graphite from orchestrate, and cut playbooks to principles (#613)"
+    },
+    {
+      "sha": "c86f349b102feb91f1966f8a6a60882a4e601b50",
+      "short": "c86f349",
+      "date": "2026-10-13",
+      "subject": "refactor(pstack): make /ketchup read like /bro in 150 words (#609)"
+    },
+    {
+      "sha": "dbf49813a39c1a5389c5e28cb8e4c1c2379e2454",
+      "short": "dbf4981",
+      "date": "2026-10-13",
+      "subject": "refactor(pstack): reword /in-your-own-words around goals and the problem (#606)"
+    },
+    {
+      "sha": "3177dab5d4057724e6a02a198596664707795444",
+      "short": "3177dab",
+      "date": "2026-10-13",
+      "subject": "chore(pstack): bump to 0.15.22 (#605)"
+    },
+    {
+      "sha": "36cecbf2b5089b275254d59cb4612d6f96f00fbd",
+      "short": "36cecbf",
+      "date": "2026-10-13",
+      "subject": "feat(pstack): propose a cheap always-on signal after a deep debugging dig (#604)"
+    },
+    {
+      "sha": "d00ba6ee9b26ff3bb084b8a5051ff6436860cbdf",
+      "short": "d00ba6e",
+      "date": "2026-10-13",
+      "subject": "feat(pstack): shorten /ketchup replies and build them on real visuals (#595)"
+    },
+    {
+      "sha": "7d8d9091e59a1fe9600bb317a1b7f69a31daa349",
+      "short": "7d8d909",
+      "date": "2026-10-13",
+      "subject": "feat(pstack): add /in-your-own-words to play back the goal before work (#602)"
+    },
+    {
+      "sha": "b93e8117880f695bc49ef7b1ef72c09bfcc7c1de",
+      "short": "b93e811",
+      "date": "2026-10-13",
+      "subject": "fix(pstack): let poteto-agent find poteto-mode, drop ignored frontmatter, document the / menu (#597)"
+    },
+    {
+      "sha": "997ffc7fe26bdaa6478a14e7f5b8d5f9ed747102",
+      "short": "997ffc7",
+      "date": "2026-10-12",
+      "subject": "chore(pstack): bump to 0.15.21 (#584)"
+    },
+    {
+      "sha": "364a77eb358f16292410a7295fd8d103fb7dd40e",
+      "short": "364a77e",
+      "date": "2026-10-12",
+      "subject": "fix(pstack): tell agents where bundled leaf skills live (#577)"
+    },
+    {
+      "sha": "1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def",
+      "short": "1b6d44f",
+      "date": "2026-10-12",
+      "subject": "chore(pstack): bump to 0.15.20 (#581)"
+    },
+    {
+      "sha": "c49b37a2c0e7bede60a71ad7322e3f12c337a3da",
+      "short": "c49b37a",
+      "date": "2026-10-12",
+      "subject": "fix(pstack): create-verification-skill readiness means the app is usable (#573)"
+    },
+    {
+      "sha": "e5a02f8fb0409c2db7eb06eae9078b235a2b5009",
+      "short": "e5a02f8",
+      "date": "2026-10-11",
+      "subject": "feat(pstack): add Agent Plugins v1 root manifest (#576)"
+    },
+    {
+      "sha": "2bd5dd4f22ef958435082c417c027079f8f4ddb7",
+      "short": "2bd5dd4",
+      "date": "2026-10-11",
+      "subject": "fix(pstack): make the /poteto-mode chat the runner, poteto-agent a delegate (#575)"
+    },
+    {
+      "sha": "cf9a111eaf1eda5724abb607ef4c446ced843d65",
+      "short": "cf9a111",
+      "date": "2026-10-11",
+      "subject": "fix(pstack): worktree-audit checks MERGED against the default branch, not origin/main (#574)"
+    },
+    {
+      "sha": "bc697d0a5a163cec979e362b601e36f5616083fd",
+      "short": "bc697d0",
+      "date": "2026-10-11",
+      "subject": "fix(pstack): drop \"Must always apply.\" from unslop description (#572)"
+    },
+    {
+      "sha": "ff8f83da30af53de945acd0e1dc10a7b21a3187f",
+      "short": "ff8f83d",
+      "date": "2026-10-11",
+      "subject": "fix(watch-pr): paginate review threads instead of reading only the first 100 (#484)"
+    },
+    {
+      "sha": "87c810326a9a1dc727651b7d9bbfc5a116d68582",
+      "short": "87c8103",
+      "date": "2026-10-11",
+      "subject": "fix(pstack): respect fenced code blocks in plan checks (#536)"
+    },
+    {
+      "sha": "de2dba6ffa001bc3c97acf1f58bc7ab29d5fdc7a",
+      "short": "de2dba6",
+      "date": "2026-10-11",
+      "subject": "fix(pstack): rename Comment Sicko agent id so Grok can spawn it (#486)"
+    },
+    {
+      "sha": "08bd59b37834550f5e8fa0bb5e8852204a7534cf",
+      "short": "08bd59b",
+      "date": "2026-10-11",
+      "subject": "refactor(pstack): cut unneeded sections from seven skills (#571)"
+    },
+    {
+      "sha": "ea32d9562a1c9f077d7cdd3be53d07383eb18866",
+      "short": "ea32d95",
+      "date": "2026-10-12",
+      "subject": "feat(pstack): show /ketchup decisions as before/after visuals (#570)"
+    },
+    {
+      "sha": "978ca6e9c0e012047cd5058b8e829240336e704e",
+      "short": "978ca6e",
+      "date": "2026-10-10",
+      "subject": "feat(pstack): add /ketchup skill (#539)"
+    },
+    {
+      "sha": "00b14f1df36b32a8dd1529324a3a459f6563b127",
+      "short": "00b14f1",
+      "date": "2026-10-10",
+      "subject": "refactor(pstack): distill skill prompts to cut tokens (#538)"
+    },
+    {
+      "sha": "df581122cde17e6e27686b5a448bde23e4ad4318",
+      "short": "df58112",
+      "date": "2026-10-05",
+      "subject": "feat(pstack): drop Sol, default to Opus xhigh and Grok (#511)"
+    },
+    {
+      "sha": "1e56b2913469f05101e4ffd4d437c2e6fd2c1b8d",
+      "short": "1e56b29",
+      "date": "2026-10-05",
+      "subject": "feat(pstack): have /poteto-help ask about /setup-pstack when no model rule exists (#509)"
+    },
+    {
+      "sha": "2cbf58508f40de470d7490b55c51d71241928fa2",
+      "short": "2cbf585",
+      "date": "2026-10-05",
+      "subject": "docs(pstack): refresh guide for /correct, checklist, prompting tips (#508)"
+    },
+    {
+      "sha": "807c031086fcf71c88c863b4a4e6938b6785c58f",
+      "short": "807c031",
+      "date": "2026-10-05",
+      "subject": "feat(pstack): add prompting references to /poteto-help (#507)"
+    },
+    {
+      "sha": "00b52d954a99ff67802cad428ff19218659f76fd",
+      "short": "00b52d9",
+      "date": "2026-10-05",
+      "subject": "fix(pstack): make /poteto-help typed-only (#506)"
+    }
+  ],
+  "changeCount": 125,
+  "changesByAction": {
+    "exclude": 26,
+    "review": 2,
+    "port": 86,
+    "scripts": 11
+  },
+  "changes": [
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": ".cursor-plugin/plugin.json",
+      "upstreamOldPath": null,
+      "portPath": ".cursor-plugin/plugin.json",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor plugin manifest and launcher. T3 Code installs skills via install.sh into ~/.agents/skills."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "README.md",
+      "upstreamOldPath": null,
+      "portPath": "README.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "review",
+      "reason": "Upstream README describes the Cursor plugin; p3-stack keeps its own. Reported for manual decision."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "agents/comment-sicko.md",
+      "upstreamOldPath": null,
+      "portPath": "agents/comment-sicko.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "agents/poteto-agent.md",
+      "upstreamOldPath": null,
+      "portPath": "agents/p3-agent.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/01-setup.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/01-setup.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/02-poteto-mode.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/02-poteto-mode.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/03-understand.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/03-understand.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/04-design.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/04-design.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/05-build-and-clean.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/05-build-and-clean.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/06-verify-and-ship.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/06-verify-and-ship.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/07-overnight.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/07-overnight.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/08-principles.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/08-principles.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/09-make-it-yours.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/09-make-it-yours.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/10-recipes-and-pitfalls.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/10-recipes-and-pitfalls.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "docs/guide/README.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/guide/README.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "docs/harness/claude-code.md",
+      "upstreamOldPath": null,
+      "portPath": "docs/harness/claude-code.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "review",
+      "reason": "Docs are adapted case by case; changes are reported for a manual decision."
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "plugin.json",
+      "upstreamOldPath": null,
+      "portPath": "plugin.json",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "exclude",
+      "reason": "Cursor plugin manifest (distribution metadata for the Cursor plugin store). Not applicable to T3 Code."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/architect/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/architect/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/architect/references/runner-prompt.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/architect/references/runner-prompt.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/arena/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/arena/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/automate-me/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/automate-me/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/benchmark-checklist/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/benchmark-checklist/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/blast-radius/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/blast-radius/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/correct/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/correct/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/create-formal-verification-skill/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/create-formal-verification-skill/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/create-verification-skill/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/create-verification-skill/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/figure-it-out/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/figure-it-out/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/how/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/how/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/how/references/explorer-prompt.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/how/references/explorer-prompt.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/in-your-own-words/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/in-your-own-words/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/interrogate/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/interrogate/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/interrogate/references/lead-judgment.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/interrogate/references/lead-judgment.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/interrogate/references/reviewer-prompt.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/interrogate/references/reviewer-prompt.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/interrogate/references/rubric.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/interrogate/references/rubric.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/ketchup/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/ketchup/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/maintain-formal-verification-skill/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/maintain-formal-verification-skill/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/make-bot-ui/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/make-bot-ui/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/no-comments/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/no-comments/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-help/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-help/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-help/references/prompting.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-help/references/prompting.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-help/references/recipes.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-help/references/recipes.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/autonomous-run.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/autonomous-run.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/autopilot-full.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/autopilot-full.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/autopilot-stack.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/autopilot-stack.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/babysit.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/babysit.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/bug-fix.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/bug-fix.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/eval.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/eval.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/feature.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/feature.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/hillclimb.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/hillclimb.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/multi-phase-plan.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/multi-phase-plan.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/opening-a-pr.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/opening-a-pr.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/orchestrate.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/orchestrate.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/perf-issue.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/perf-issue.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/refactoring.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/refactoring.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/runtime-forensics.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/runtime-forensics.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/session-pickup.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/session-pickup.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/shipping.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/shipping.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/trace-forensics.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/trace-forensics.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/playbooks/worktree-cleanup.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/playbooks/worktree-cleanup.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/check-plan.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/check-plan.mjs",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/check-plan.test.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/check-plan.test.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/orch/orch.test.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/orch/orch.test.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/orch/orch.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/orch/orch.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/orch/store.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/orch/store.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/package.json",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/package.json",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/watch-pr/fakes.test-helper.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/watch-pr/github.test.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/watch-pr/github.test.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/watch-pr/github.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/watch-pr/github.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/watch-pr/policy.test.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/watch-pr/policy.test.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/watch-pr/policy.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/watch-pr/policy.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/watch-pr/types.ts",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/watch-pr/types.ts",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/poteto-mode/scripts/worktree-audit.sh",
+      "upstreamOldPath": null,
+      "portPath": "skills/p3-mode/scripts/worktree-audit.sh",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "exclude",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-attack-the-premise/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-attack-the-premise/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-build-the-lever/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-build-the-lever/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-encode-lessons-in-structure/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-encode-lessons-in-structure/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-exhaust-the-design-space/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-exhaust-the-design-space/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-explain-the-number/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-explain-the-number/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-fix-root-causes/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-fix-root-causes/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-guard-the-context-window/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-guard-the-context-window/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-laziness-protocol/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-laziness-protocol/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-make-operations-idempotent/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-make-operations-idempotent/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-minimize-reader-load/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-minimize-reader-load/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-model-the-domain/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-model-the-domain/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-never-block-on-the-human/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-never-block-on-the-human/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-redesign-from-first-principles/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-redesign-from-first-principles/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-subtract-before-you-add/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-subtract-before-you-add/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-test-behavior-not-implementation/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-test-behavior-not-implementation/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/principle-type-system-discipline/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/principle-type-system-discipline/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/recall/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/recall/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/reflect/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/reflect/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/reflect/references/divergent-reviewer.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/reflect/references/divergent-reviewer.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/reflect/references/judgment-reviewer.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/reflect/references/judgment-reviewer.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/reflect/references/synthesizer.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/reflect/references/synthesizer.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/reflect/references/tooling-reviewer.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/reflect/references/tooling-reviewer.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/setup-pstack/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/setup-p3/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": true,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/sharpen/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/sharpen/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/show-me-your-work/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/show-me-your-work/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/chart-to-tla.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/chart-to-tla.mjs",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/compare-charts.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/compare-charts.mjs",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/lib.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/lib.mjs",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/model/OutputFolder.cfg",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/model/OutputFolder.cfg",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/model/OutputFolder.map.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/model/OutputFolder.map.mjs",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/model/OutputFolder.tla",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/model/OutputFolder.tla",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/statechart.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/statechart.mjs",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/test/statechart.test.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/test/statechart.test.mjs",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/test/sync.mmd",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/test/sync.mmd",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/test/upload.mmd",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/test/upload.mmd",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "A",
+      "similarity": null,
+      "upstreamPath": "skills/statechart/scripts/tlc-to-chart.mjs",
+      "upstreamOldPath": null,
+      "portPath": "skills/statechart/scripts/tlc-to-chart.mjs",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "scripts",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/swarm/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/swarm/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/technical-writing/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/technical-writing/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/typescript-best-practices/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/typescript-best-practices/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/typescript-best-practices/references/patterns.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/typescript-best-practices/references/patterns.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/unslop/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/unslop/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/SKILL.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/SKILL.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/epistemics.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/epistemics.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/investigator-prompt.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/investigator-prompt.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/sources/code-archaeology.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/sources/code-archaeology.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/sources/datadog.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/sources/datadog.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/sources/incident-postmortem.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/sources/incident-postmortem.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/sources/sentry.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/sources/sentry.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/sources/slack.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/sources/slack.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    },
+    {
+      "status": "M",
+      "similarity": null,
+      "upstreamPath": "skills/why/references/synthesizer-prompt.md",
+      "upstreamOldPath": null,
+      "portPath": "skills/why/references/synthesizer-prompt.md",
+      "portOldPath": null,
+      "renamedInPort": false,
+      "action": "port",
+      "reason": null
+    }
+  ]
+}

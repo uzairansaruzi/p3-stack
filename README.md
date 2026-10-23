@@ -39,6 +39,10 @@ architect, arena, automate-me, benchmark-checklist, blast-radius, bro, correct, 
 
 The twenty-four principle skills are indexed inside `p3-mode` and referenced by the other skills by name.
 
+## Staying current with pstack
+
+An automated sync tracks upstream [pstack](https://github.com/cursor/plugins/tree/main/pstack) daily, adapts improvements for T3 Code with Claude, validates them, and opens a reviewable pull request. The tracked baseline lives in `.upstream-sync/state.json` and advances only when a sync PR merges. See [docs/upstream-sync.md](docs/upstream-sync.md) for setup, secrets, and troubleshooting.
+
 ## Credit
 
 p3-stack adapts [pstack](https://github.com/cursor/plugins/tree/main/pstack) by [poteto](https://x.com/poteto). The skills, principles, and language are hers; the T3 Code rewiring is this repo's. MIT, see [LICENSE](LICENSE).

@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "base": "origin/main",
+  "checkedAt": "2026-10-23T01:18:24.364Z",
+  "changedFileCount": 12,
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "scripts touched (committed for review, never executed by sync): scripts/upstream/advance-state.mjs, scripts/upstream/detect.mjs, scripts/upstream/lib.mjs, scripts/upstream/render-pr-body.mjs, scripts/upstream/validate.mjs"
+  ],
+  "scriptsTouched": [
+    "scripts/upstream/advance-state.mjs",
+    "scripts/upstream/detect.mjs",
+    "scripts/upstream/lib.mjs",
+    "scripts/upstream/render-pr-body.mjs",
+    "scripts/upstream/validate.mjs"
+  ]
+}

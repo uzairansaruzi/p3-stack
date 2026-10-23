@@ -1,0 +1,48 @@
+{
+  "path_map": {
+    "skills/poteto-mode": "skills/p3-mode",
+    "skills/poteto-help": "skills/p3-help",
+    "skills/setup-pstack": "skills/setup-p3",
+    "agents/poteto-agent.md": "agents/p3-agent.md"
+  },
+  "exclude": [
+    {
+      "path": ".cursor-plugin/**",
+      "reason": "Cursor plugin manifest and launcher. T3 Code installs skills via install.sh into ~/.agents/skills."
+    },
+    {
+      "path": "plugin.json",
+      "reason": "Cursor plugin manifest (distribution metadata for the Cursor plugin store). Not applicable to T3 Code."
+    },
+    {
+      "path": "assets/**",
+      "reason": "Cursor plugin branding assets."
+    },
+    {
+      "path": "skills/poteto-mode/scripts/**",
+      "reason": "Cursor-era orchestration scripts (watch-pr polling, orch loops, check-plan). Replaced natively by watch_pull_request, schedule_task, delegate_task, and task_status per AGENTS.md."
+    },
+    {
+      "path": "docs/guide/**",
+      "reason": "Cursor-specific user guide. Port manually only when a guide change matters to T3 users; tracked under 'review' if it changes."
+    },
+    {
+      "path": "automations/**",
+      "reason": "Cursor automations pack (benny). Cursor-automation-format; port manually only after a T3-native design exists."
+    }
+  ],
+  "review": [
+    {
+      "path": "docs/**",
+      "reason": "Docs are adapted case by case; changes are reported for a manual decision."
+    },
+    {
+      "path": "README.md",
+      "reason": "Upstream README describes the Cursor plugin; p3-stack keeps its own. Reported for manual decision."
+    },
+    {
+      "path": "LICENSE",
+      "reason": "License text change; reported for manual decision."
+    }
+  ]
+}
