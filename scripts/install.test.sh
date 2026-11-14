@@ -232,11 +232,35 @@ assert_link "a dangling foreign link is never touched" "$H/.claude/skills/foreig
 H="$(tmp)"
 B="$(tmp)"
 mkdir -p "$H/.claude/skills"
-cp -R "$ROOT/skills" "$ROOT/install.sh" "$B/"
+cp -R "$ROOT/skills" "$ROOT/install.sh" "$ROOT/UPSTREAM.md" "$B/"
 ln -s "$B/skills/p3-mode" "$H/.claude/skills/p3-mode"
 out="$(run "$H")"
 assert_has "a link from another checkout is relinked" "$out" "relink p3-mode"
 assert_link "the relinked entry points into this repo" "$H/.claude/skills/p3-mode" "$ROOT/skills/p3-mode"
+
+# --- a look-alike skill library is not a p3-stack checkout -------------------
+
+H="$(tmp)"
+L="$(tmp)"
+mkdir -p "$H/.claude/skills" "$L/skills/tdd" "$L/skills/p3-mode"
+printf -- '---\nname: p3-mode\n---\n' > "$L/skills/p3-mode/SKILL.md"
+printf '#!/bin/sh\n' > "$L/install.sh"
+ln -s "$L/skills/tdd" "$H/.claude/skills/tdd"
+out="$(run "$H")"
+assert_has "a look-alike library is skipped as foreign" "$out" "skip tdd: foreign symlink"
+assert_link "a look-alike library link is untouched" "$H/.claude/skills/tdd" "$L/skills/tdd"
+
+# --- Codex dirs: another checkout or a dangling link does not block ----------
+
+H="$(tmp)"
+B="$(tmp)"
+mkdir -p "$H/.tcodex/skills"
+cp -R "$ROOT/skills" "$ROOT/install.sh" "$ROOT/UPSTREAM.md" "$B/"
+ln -s "$B/skills/tdd" "$H/.tcodex/skills/tdd"
+ln -s "$(tmp)/gone" "$H/.tcodex/skills/teach"
+run "$H" >/dev/null
+assert_link "another checkout in ~/.tcodex does not block tdd" "$H/.agents/skills/tdd" "$ROOT/skills/tdd"
+assert_link "a dangling link in ~/.tcodex does not block teach" "$H/.agents/skills/teach" "$ROOT/skills/teach"
 
 # --- HOME with a trailing slash still prints ~ paths -------------------------
 

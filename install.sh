@@ -114,8 +114,16 @@ own_skill() {
   return 1
 }
 
+# is_p3_checkout <dir>: <dir> is a p3-stack checkout. All three must hold, so a
+# skill library that merely shares the skills/<name> layout does not qualify.
+is_p3_checkout() {
+  [ -f "$1/UPSTREAM.md" ] || return 1
+  grep -q 'p3-stack' "$1/install.sh" 2>/dev/null || return 1
+  sed -n 2p "$1/skills/p3-mode/SKILL.md" 2>/dev/null | grep -qx 'name: p3-mode'
+}
+
 # other_checkout <entry> <name>: a symlink to skills/<name> of another p3-stack
-# checkout that still exists (same layout, has skills/p3-mode/SKILL.md).
+# checkout that still exists.
 other_checkout() {
   local t root
   [ -L "$1" ] || return 1
@@ -123,7 +131,7 @@ other_checkout() {
   [ "$(basename "$t")" = "$2" ] || return 1
   root="$(dirname "$t")"
   [ "$(basename "$root")" = "skills" ] || return 1
-  [ -f "$root/p3-mode/SKILL.md" ] && [ -f "$(dirname "$root")/install.sh" ]
+  is_p3_checkout "$(dirname "$root")"
 }
 
 own_agents() {
@@ -337,8 +345,9 @@ while [ "$i" -lt "${#T_DIR[@]}" ]; do
       while IFS= read -r xd; do
         if [ -z "$xd" ]; then continue; fi
         if [ "$(resolve "$xd")" = "$canon" ]; then continue; fi
-        if [ -e "$xd/$name" ] || [ -L "$xd/$name" ]; then
-          if own_skill "$xd/$name"; then continue; fi
+        # only a live entry conflicts: Codex cannot load a dangling link
+        if [ -e "$xd/$name" ]; then
+          if own_skill "$xd/$name" || other_checkout "$xd/$name" "$name"; then continue; fi
           conflict="$xd/$name"
           break
         fi
