@@ -22,7 +22,7 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/benchmark-checklist | skills/benchmark-checklist | 4e5b1cf | ported |  |
 | skills/blast-radius | skills/blast-radius | 4e5b1cf | ported |  |
 | skills/bro | skills/bro | c742dd6 | ported |  |
-| skills/correct | skills/correct | 4e5b1cf | ported |  |
+| skills/correct | skills/correct | c742dd6 | ported |  |
 | skills/create-formal-verification-skill | skills/create-formal-verification-skill | — | pending | 新技能，批次 B4 |
 | skills/create-verification-skill | skills/create-verification-skill | 4e5b1cf | ported |  |
 | skills/figure-it-out | skills/figure-it-out | 4e5b1cf | ported |  |
@@ -37,30 +37,30 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/no-comments | skills/no-comments | 4e5b1cf | ported |  |
 | skills/poteto-help | skills/p3-help | 4e5b1cf | ported | 改名 |
 | skills/poteto-mode | skills/p3-mode | 4e5b1cf | ported | 改名 |
-| skills/principle-attack-the-premise | skills/principle-attack-the-premise | 4e5b1cf | ported |  |
+| skills/principle-attack-the-premise | skills/principle-attack-the-premise | c742dd6 | ported |  |
 | skills/principle-boundary-discipline | skills/principle-boundary-discipline | c742dd6 | ported |  |
-| skills/principle-build-the-lever | skills/principle-build-the-lever | 4e5b1cf | ported |  |
-| skills/principle-encode-lessons-in-structure | skills/principle-encode-lessons-in-structure | 4e5b1cf | ported |  |
-| skills/principle-exhaust-the-design-space | skills/principle-exhaust-the-design-space | 4e5b1cf | ported |  |
+| skills/principle-build-the-lever | skills/principle-build-the-lever | c742dd6 | ported |  |
+| skills/principle-encode-lessons-in-structure | skills/principle-encode-lessons-in-structure | c742dd6 | ported |  |
+| skills/principle-exhaust-the-design-space | skills/principle-exhaust-the-design-space | c742dd6 | ported |  |
 | skills/principle-experience-first | skills/principle-experience-first | c742dd6 | ported |  |
-| skills/principle-explain-the-number | skills/principle-explain-the-number | 4e5b1cf | ported |  |
-| skills/principle-fix-root-causes | skills/principle-fix-root-causes | 4e5b1cf | ported |  |
+| skills/principle-explain-the-number | skills/principle-explain-the-number | c742dd6 | ported |  |
+| skills/principle-fix-root-causes | skills/principle-fix-root-causes | c742dd6 | ported |  |
 | skills/principle-foundational-thinking | skills/principle-foundational-thinking | c742dd6 | ported |  |
-| skills/principle-guard-the-context-window | skills/principle-guard-the-context-window | 4e5b1cf | ported |  |
-| skills/principle-laziness-protocol | skills/principle-laziness-protocol | 4e5b1cf | ported |  |
-| skills/principle-make-operations-idempotent | skills/principle-make-operations-idempotent | 4e5b1cf | ported |  |
-| skills/principle-migrate-callers-then-delete-legacy-apis | skills/principle-migrate-callers-then-delete-legacy-apis | 4e5b1cf | ported |  |
-| skills/principle-minimize-reader-load | skills/principle-minimize-reader-load | 4e5b1cf | ported |  |
-| skills/principle-model-the-domain | skills/principle-model-the-domain | 4e5b1cf | ported |  |
-| skills/principle-never-block-on-the-human | skills/principle-never-block-on-the-human | 4e5b1cf | ported |  |
+| skills/principle-guard-the-context-window | skills/principle-guard-the-context-window | c742dd6 | ported | description 保留 delegated tasks 用词 |
+| skills/principle-laziness-protocol | skills/principle-laziness-protocol | c742dd6 | ported |  |
+| skills/principle-make-operations-idempotent | skills/principle-make-operations-idempotent | c742dd6 | ported |  |
+| skills/principle-migrate-callers-then-delete-legacy-apis | skills/principle-migrate-callers-then-delete-legacy-apis | c742dd6 | ported |  |
+| skills/principle-minimize-reader-load | skills/principle-minimize-reader-load | c742dd6 | ported |  |
+| skills/principle-model-the-domain | skills/principle-model-the-domain | c742dd6 | ported |  |
+| skills/principle-never-block-on-the-human | skills/principle-never-block-on-the-human | c742dd6 | ported |  |
 | skills/principle-outcome-oriented-execution | skills/principle-outcome-oriented-execution | c742dd6 | ported |  |
 | skills/principle-prove-it-works | skills/principle-prove-it-works | c742dd6 | ported |  |
-| skills/principle-redesign-from-first-principles | skills/principle-redesign-from-first-principles | 4e5b1cf | ported |  |
+| skills/principle-redesign-from-first-principles | skills/principle-redesign-from-first-principles | c742dd6 | ported |  |
 | skills/principle-separate-before-serializing-shared-state | skills/principle-separate-before-serializing-shared-state | c742dd6 | ported |  |
 | skills/principle-sequence-verifiable-units | skills/principle-sequence-verifiable-units | c742dd6 | ported |  |
-| skills/principle-subtract-before-you-add | skills/principle-subtract-before-you-add | 4e5b1cf | ported |  |
-| skills/principle-test-behavior-not-implementation | skills/principle-test-behavior-not-implementation | 4e5b1cf | ported |  |
-| skills/principle-type-system-discipline | skills/principle-type-system-discipline | 4e5b1cf | ported |  |
+| skills/principle-subtract-before-you-add | skills/principle-subtract-before-you-add | c742dd6 | ported |  |
+| skills/principle-test-behavior-not-implementation | skills/principle-test-behavior-not-implementation | c742dd6 | ported |  |
+| skills/principle-type-system-discipline | skills/principle-type-system-discipline | c742dd6 | ported |  |
 | skills/recall | skills/recall | 4e5b1cf | ported |  |
 | skills/reflect | skills/reflect | 4e5b1cf | ported |  |
 | skills/setup-pstack | skills/setup-p3 | 4e5b1cf | ported | 改名 |
@@ -70,9 +70,9 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/swarm | skills/swarm | 4e5b1cf | ported |  |
 | skills/tdd | skills/tdd | c742dd6 | ported |  |
 | skills/teach | skills/teach | c742dd6 | ported |  |
-| skills/technical-writing | skills/technical-writing | 4e5b1cf | ported |  |
-| skills/typescript-best-practices | skills/typescript-best-practices | 4e5b1cf | ported |  |
-| skills/unslop | skills/unslop | 4e5b1cf | ported |  |
+| skills/technical-writing | skills/technical-writing | c742dd6 | ported |  |
+| skills/typescript-best-practices | skills/typescript-best-practices | c742dd6 | ported | 保留 p3 去掉的 paths: frontmatter 字段 |
+| skills/unslop | skills/unslop | c742dd6 | ported |  |
 | skills/why | skills/why | 4e5b1cf | ported |  |
 | agents/poteto-agent.md | agents/p3-agent.md | 4e5b1cf | ported | 改名 |
 | agents/comment-sicko.md | agents/comment-sicko.md | c742dd6 | ported | |
@@ -115,7 +115,7 @@ sync-spec: docs/sync-spec-c742dd6.md
 | P8 | skills/p3-mode/playbooks/babysit.md | 基线已超出：watch_pull_request 说明 |
 | P8 | skills/p3-mode/playbooks/orchestrate.md | 基线已超出；D2=A 重写后应能去掉本行 |
 | P8 | skills/p3-mode/playbooks/pause-safely.md | 基线已超出 |
-| P8 | skills/principle-build-the-lever/SKILL.md | 基线已超出 1 行，B1 搬运后应能去掉本行 |
+| P8 
 | P8 | skills/show-me-your-work/SKILL.md | 基线已超出 |
 | P8 | skills/why/references/investigator-prompt.md | 基线已超出：T3 改写 |
 | P8 | skills/why/references/synthesizer-prompt.md | 基线已超出：T3 改写 |
@@ -124,3 +124,29 @@ sync-spec: docs/sync-spec-c742dd6.md
 
 | 路径（p3 侧，支持 glob） | 理由 |
 |---|---|
+| skills/principle-attack-the-premise/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-encode-lessons-in-structure/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-exhaust-the-design-space/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-explain-the-number/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-fix-root-causes/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-laziness-protocol/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-make-operations-idempotent/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-minimize-reader-load/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-model-the-domain/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-never-block-on-the-human/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-redesign-from-first-principles/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-subtract-before-you-add/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-test-behavior-not-implementation/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-type-system-discipline/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/why/references/epistemics.md | B1 三方合并后与上游逐字相同 |
+| skills/why/references/sources/code-archaeology.md | B1 三方合并后与上游逐字相同 |
+| skills/why/references/sources/datadog.md | B1 三方合并后与上游逐字相同 |
+| skills/why/references/sources/incident-postmortem.md | B1 三方合并后与上游逐字相同 |
+| skills/why/references/sources/sentry.md | B1 三方合并后与上游逐字相同 |
+| skills/why/references/sources/slack.md | B1 三方合并后与上游逐字相同 |
+| skills/correct/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/technical-writing/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/unslop/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/typescript-best-practices/references/patterns.md | B1 三方合并后与上游逐字相同 |
+| skills/principle-build-the-lever/SKILL.md | B1 三方合并后与上游逐字相同 |
