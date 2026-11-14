@@ -30,8 +30,12 @@ done
 # agents/ sits beside skills/ so p3-mode resolves ../../agents/<name>.md after install.
 agents_note="agents -> $AGENTS_LINK"
 if [[ -L "$AGENTS_LINK" ]]; then
-  rm "$AGENTS_LINK"
-  ln -s "$ROOT/agents" "$AGENTS_LINK"
+  if [[ "$(readlink "$AGENTS_LINK")" == "$ROOT/agents" ]]; then
+    rm "$AGENTS_LINK"
+    ln -s "$ROOT/agents" "$AGENTS_LINK"
+  else
+    agents_note="agents skipped ($AGENTS_LINK points elsewhere: $(readlink "$AGENTS_LINK"))"
+  fi
 elif [[ -e "$AGENTS_LINK" ]]; then
   agents_note="agents skipped ($AGENTS_LINK exists and is not a symlink)"
 else
