@@ -89,7 +89,8 @@ sync-spec: docs/sync-spec-c742dd6.md
 | automations/** | ignore | 作者个人自动化，p3 从未带 |
 | skills/poteto-mode/scripts/watch-pr/** | ignore | 由 watch_pull_request 取代 |
 | skills/poteto-mode/scripts/orch/** | ignore | 上游已删除，p3 从未带 |
-| skills/poteto-mode/scripts/worktree-audit.sh | ignore | 由 t3_worktree_* 取代 |
+| skills/poteto-mode/scripts/worktree-audit.sh | ignore | 由 git worktree list --porcelain 与 gh 取代 |
+| skills/poteto-mode/playbooks/**（仅 Origin forge 分支） | note | 上游 playbook 里的 Origin forge 分支已删，p3 只保留 gh；这是正文缺口，不是文件缺口，不进忽略表 |
 
 ## 白名单
 
