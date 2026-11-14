@@ -43,7 +43,7 @@ The server POSTs to the webhook URL with:
 - one try, no retry
 
 The POST returns HTTP 202 when the run is queued.
-Before you tell the user that the UI is live, drive the page once with `preview_open` and `preview_click`, using an action the prompt ignores, and keep a `preview_snapshot` as proof.
+Before you tell the user that the UI is live, drive the page once with `preview_open` and `preview_act` with `action: "click"`, using an action the prompt ignores, and keep a `preview_snapshot` as proof.
 
 If a POST can fail, append the same JSON to a local log. Drain that log on the next wake. Do not poll as the primary path. Do not send media bytes on the webhook.
 
