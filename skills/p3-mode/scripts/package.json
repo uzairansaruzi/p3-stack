@@ -1,0 +1,11 @@
+{
+  "name": "p3-mode-tools",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "test": "node --test check-plan.test.mjs"
+  }
+}

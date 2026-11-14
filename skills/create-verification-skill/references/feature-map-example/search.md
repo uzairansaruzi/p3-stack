@@ -25,13 +25,13 @@ Preconditions:
 - The disposable data directory contains `Quarterly plan` with body text `Draft budget`.
 - The skill's doctor check reports the expected URL and data directory.
 
-- **Toolbar entry.** Choose the `Search` button. Call `preview_click` with locator `role=button[name='Search']`. A dialog named `Search notes` appears with focus in its searchbox.
-- **Keyboard entry.** Close the dialog, focus the page, and press `/`. Call `preview_press` with key `/`. The same dialog appears and the page does not insert a slash.
-- **Title match.** Type `quarterly`. Call `preview_type` with locator `role=searchbox[name='Search notes']` and text `quarterly`. The `Search results` list contains `Quarterly plan` and does not contain `Grocery list`.
-- **Body match.** Replace the query with `budget`. Call `preview_type` with locator `role=searchbox[name='Search notes']`, text `budget`, and `clear: true`. The result `Quarterly plan` remains visible with a body-match excerpt.
-- **Open result.** Choose `Quarterly plan`. Call `preview_click` with locator `role=link[name='Quarterly plan']`. The dialog closes and the editor heading reads `Quarterly plan`.
-- **Empty state.** Reopen search and enter `volcano`. Call `preview_type` with locator `role=searchbox[name='Search notes']` and text `volcano`. A status named `No matching notes` appears after search completes.
-- **Clear query.** Choose `Clear search`. Call `preview_click` with locator `role=button[name='Clear search']`. The searchbox is empty and the `Recent notes` region replaces the result list.
+- **Toolbar entry.** Choose the `Search` button. Call `preview_act` with `action: "click"` and the `aria-ref` of the `role=button[name='Search']` element (from `preview_snapshot`). A dialog named `Search notes` appears with focus in its searchbox.
+- **Keyboard entry.** Close the dialog, focus the page, and press `/`. Call `preview_act` with `action: "press"` and key `/`. The same dialog appears and the page does not insert a slash.
+- **Title match.** Type `quarterly`. Call `preview_act` with `action: "type"`, the `aria-ref` of the `role=searchbox[name='Search notes']` element (from `preview_snapshot`) and text `quarterly`. The `Search results` list contains `Quarterly plan` and does not contain `Grocery list`.
+- **Body match.** Replace the query with `budget`. Call `preview_act` with `action: "type"`, the `aria-ref` of the `role=searchbox[name='Search notes']` element (from `preview_snapshot`), text `budget`, and `clear: true`. The result `Quarterly plan` remains visible with a body-match excerpt.
+- **Open result.** Choose `Quarterly plan`. Call `preview_act` with `action: "click"` and the `aria-ref` of the `role=link[name='Quarterly plan']` element (from `preview_snapshot`). The dialog closes and the editor heading reads `Quarterly plan`.
+- **Empty state.** Reopen search and enter `volcano`. Call `preview_act` with `action: "type"`, the `aria-ref` of the `role=searchbox[name='Search notes']` element (from `preview_snapshot`) and text `volcano`. A status named `No matching notes` appears after search completes.
+- **Clear query.** Choose `Clear search`. Call `preview_act` with `action: "click"` and the `aria-ref` of the `role=button[name='Clear search']` element (from `preview_snapshot`). The searchbox is empty and the `Recent notes` region replaces the result list.
 - **CLI match.** Search from the terminal. Run `notes search "quarterly" --format json`. Exit code `0` and stdout contain one object whose title is `Quarterly plan`.
 - **CLI miss.** Search for an absent value. Run `notes search "volcano" --format json`. Exit code `0` and stdout are `[]`.
 - **Proof.** Capture the populated result state. Call `preview_snapshot` with `save: true`, write the returned snapshot text to `artifacts/search/results.aria.txt`, and keep the returned `screenshotPath`. The artifacts identify Notes, the query, and `Quarterly plan`.
