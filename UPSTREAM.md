@@ -4,7 +4,7 @@ upstream: https://github.com/cursor/plugins
 subtree: pstack/
 pin: c742dd61706fbacc1b95f1a20b7b988cf096ce6c
 pin-date: 2026-10-27
-pin-version: 0.15.10
+pin-version: 0.15.36
 synced-on: 2026-11-14
 sync-target: c742dd61706fbacc1b95f1a20b7b988cf096ce6c
 sync-spec: docs/sync-spec-c742dd6.md
@@ -87,8 +87,6 @@ sync-spec: docs/sync-spec-c742dd6.md
 | docs/harness/** | ignore | Claude Code 适配说明，p3 面向 T3 Code |
 | docs/guide/** | ignore | D5=A：本轮不带指南 |
 | automations/** | ignore | 作者个人自动化，p3 从未带 |
-| agents/comment-sicko.md | ignore | 上游改的是 Cursor agent id，p3 的 agents/ 是提示词 |
-| skills/make-bot-ui/SKILL.md | ignore | 上游改的 name 字段，p3 已一致 |
 | skills/poteto-mode/scripts/watch-pr/** | ignore | 由 watch_pull_request 取代 |
 | skills/poteto-mode/scripts/orch/** | ignore | 上游已删除，p3 从未带 |
 | skills/poteto-mode/scripts/worktree-audit.sh | ignore | 由 t3_worktree_* 取代 |
@@ -107,7 +105,6 @@ sync-spec: docs/sync-spec-c742dd6.md
 | P6 | skills/setup-p3/SKILL.md | T3 侧有意加 disable-model-invocation |
 | P8 | agents/p3-agent.md | 基线已超出 |
 | P8 | skills/figure-it-out/SKILL.md | 基线已超出 |
-| P8 | skills/p3-mode/playbooks/babysit.md | 基线已超出：watch_pull_request 说明 |
 | P8 | skills/p3-mode/playbooks/pause-safely.md | 基线已超出 |
 | P8 | skills/show-me-your-work/SKILL.md | 基线已超出 |
 | P8 | skills/how/references/explorer-prompt.md | +2 行：T3 子 agent 只读说明 |

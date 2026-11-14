@@ -28,9 +28,11 @@ If you are a delegated worker, your brief names exactly one skill directory (`sk
 
 Everything else in pstack transfers as written: the principles, the playbook shapes, the brief template, the reply style, the autonomy rules. Adopt it.
 
-## Role names
+## Role line format
 
 Each role line in `p3-models.md` reads `<provider/model> (<effort>, speed: <fastMode|serviceTier|n/a>)`; `p3-mode`'s Subagents section owns the rule for raising effort and using the speed option.
+
+## Role names
 
 Code work reads its line in `p3-models.md`: `feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`. Prose and judgment read `judgment and prose`; the hardest changes read `hardest tasks`.
 

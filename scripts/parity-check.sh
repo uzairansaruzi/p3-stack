@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# parity-check.sh: check p3-stack against upstream pstack with the eight criteria of
-# docs/sync-spec-c742dd6.md §4 (P1..P8). Read-only; reads UPSTREAM.md.
+# parity-check.sh: check p3-stack against upstream pstack with the nine criteria of
+# docs/sync-spec-c742dd6.md §4 (P1..P8) plus P9 (verbatim files and pin-version). Read-only; reads UPSTREAM.md.
 #
 # usage: scripts/parity-check.sh [--to <rev>] [--upstream <path|url>] [--no-fetch] [--all]
 # prints one PASS / ALLOW / FAIL line per criterion (P4, P5, P8 judge each unit against its 对齐到 commit) (ALLOW = only whitelisted exceptions);
+# whitelist rows that excused nothing are listed as STALE (reported, not a FAIL; delete them).
 # --all lists every offending path instead of the first 12. exit 1 when any FAIL, 2 on error.
 set -euo pipefail
 
@@ -19,7 +20,7 @@ while [[ $# -gt 0 ]]; do
     --upstream) UPSTREAM="${2:?--upstream needs a path or url}"; shift 2 ;;
     --no-fetch) FETCH=0; shift ;;
     --all) ALL=1; shift ;;
-    -h|--help) sed -n '2,7p' "${BASH_SOURCE[0]}"; exit 0 ;;
+    -h|--help) sed -n '2,9p' "${BASH_SOURCE[0]}"; exit 0 ;;
     *) die "unknown argument: $1" ;;
   esac
 done
@@ -35,7 +36,7 @@ table "映射" > "$TMP/map.tsv"
 table "白名单" > "$TMP/wl.tsv"
 table "逐字搬运" > "$TMP/strict.tsv"
 
-export ROOT UP SUBTREE TO_FULL ALL MAPF="$TMP/map.tsv" WLF="$TMP/wl.tsv" STRICTF="$TMP/strict.tsv"
+export ROOT UP SUBTREE TO_FULL PIN_FULL PIN_VERSION="$(header pin-version)" ALL MAPF="$TMP/map.tsv" WLF="$TMP/wl.tsv" STRICTF="$TMP/strict.tsv"
 for n in "${NOTES[@]:-}"; do [[ -n "$n" ]] && printf 'note: %s\n' "$n"; done
 printf 'parity: p3-stack vs upstream %s @ %s\n' "$SUBTREE" "$(S "$TO_FULL")"
 node --input-type=module - <<'JS'
@@ -43,7 +44,7 @@ import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const { ROOT, UP, SUBTREE, TO_FULL } = process.env
+const { ROOT, UP, SUBTREE, TO_FULL, PIN_FULL, PIN_VERSION } = process.env
 const ALL = process.env.ALL === '1'
 const git = (...a) => execFileSync('git', ['-C', UP, ...a], { encoding: 'utf8', maxBuffer: 1 << 28 })
 const showAt = (rev, p) => { try { return git('show', `${rev}:${SUBTREE}/${p}`) } catch { return null } }
@@ -53,8 +54,12 @@ const map = rows(process.env.MAPF).map(([up, p3, al, st]) => ({ up, p3, al, st }
 const wl = rows(process.env.WLF).map(([crit, p, why]) => ({ crit, p, why }))
 const strict = rows(process.env.STRICTF).map(([g]) => g)
 const re = (g) => new RegExp('^' + g.replace(/[.+^$(){}|\\]/g, '\\$&').replace(/\*\*/g, '\u0001').replace(/\*/g, '[^/]*').replace(/\u0001/g, '.*') + '$')
-const wlRe = wl.map((w) => ({ ...w, re: re(w.p) }))
-const allowed = (label, ...ps) => wlRe.some((w) => (w.crit === label || w.crit === label.split(' ')[0]) && ps.some((p) => w.re.test(p)))
+const wlRe = wl.map((w) => ({ ...w, re: re(w.p), used: false }))
+const allowed = (label, ...ps) => {
+  const hit = wlRe.filter((w) => (w.crit === label || w.crit === label.split(' ')[0]) && ps.some((p) => w.re.test(p)))
+  hit.forEach((w) => { w.used = true })
+  return hit.length > 0
+}
 
 // rename map derived from the mapping table (upstream name -> p3 name)
 const renames = map.filter((r) => path.basename(r.up) !== path.basename(r.p3) && r.p3 !== '—')
@@ -196,7 +201,7 @@ const check = (c, ok, path_, msg, ...alt) => {
   const c = crit('P7', 'role names close between AGENTS.md and setup-p3')
   const agents = read('AGENTS.md')
   const sec = agents.slice(agents.indexOf('## Role names'), agents.indexOf('## Writing rules'))
-  const roleA = new Set([...sec.matchAll(/`([^`]+)`/g)].map((m) => m[1]).filter((x) => x !== 'p3-models.md'))
+  const roleA = new Set([...sec.matchAll(/`([^`]+)`/g)].map((m) => m[1]).filter((x) => /^[a-z][a-z ,-]*$/.test(x)))
   const setup = fs.existsSync(path.join(ROOT, 'skills/setup-p3/SKILL.md')) ? read('skills/setup-p3/SKILL.md') : ''
   const block = /```\n(# p3 model[\s\S]*?)```/.exec(setup)?.[1] ?? ''
   const roleS = new Set(block.split('\n').filter((l) => !l.startsWith('#') && /^[a-z][a-z ,-]*: /.test(l)).map((l) => l.split(': ')[0]))
@@ -215,6 +220,35 @@ const check = (c, ok, path_, msg, ...alt) => {
     check(c, a <= b, m.p3, `${a} lines vs upstream ${b}`, u)
   }
 }
+// P9 verbatim files are byte-identical to upstream; pin-version matches the pin
+{
+  const c = crit('P9', 'verbatim files byte-identical to upstream; pin-version matches the pin')
+  const raw = (rev, p) => { try { return execFileSync('git', ['-C', UP, 'show', `${rev}:${SUBTREE}/${p}`], { maxBuffer: 1 << 28 }) } catch { return null } }
+  const strictRe = strict.map(re)
+  const isStrict = (p3) => strictRe.some((r) => r.test(p3))
+  const p3All = ['skills', 'agents'].flatMap((d) => walk(path.join(ROOT, d))).map((f) => path.relative(ROOT, f))
+  for (const g of strict) if (!p3All.some((f) => re(g).test(f))) c.fails.push(`${g}: matches no p3 file`)
+  let n = 0
+  const seen = new Set()
+  for (const f of p3All.filter(isStrict)) {
+    const m = toUp(f)
+    if (!m) { c.fails.push(`${f}: verbatim but no mapping row`); continue }
+    seen.add(f); n++
+    const up = raw(TO_FULL, m.up)
+    if (!up) { c.fails.push(`${f}: no upstream counterpart ${m.up}`); continue }
+    check(c, up.equals(fs.readFileSync(path.join(ROOT, f))), f, `differs from upstream ${m.up}`)
+  }
+  for (const u of upFiles) {
+    const m = toP3(u)
+    if (m?.p3 && isStrict(m.p3) && !seen.has(m.p3)) c.fails.push(`${m.p3}: verbatim but missing (upstream ${u})`)
+  }
+  let upVersion = null
+  try { upVersion = JSON.parse(execFileSync('git', ['-C', UP, 'show', `${PIN_FULL}:${SUBTREE}/.cursor-plugin/plugin.json`], { encoding: 'utf8' })).version } catch {}
+  if (!PIN_VERSION) c.fails.push('UPSTREAM.md: pin-version missing')
+  else if (!upVersion) c.fails.push(`upstream plugin.json unreadable at pin ${PIN_FULL.slice(0, 7)}`)
+  else if (PIN_VERSION !== upVersion) c.fails.push(`UPSTREAM.md: pin-version ${PIN_VERSION} != upstream ${upVersion} at pin`)
+  c.info.push(`${n} verbatim files, pin-version ${PIN_VERSION}`)
+}
 
 let fail = 0, allow = 0, pass = 0
 for (const c of results) {
@@ -225,6 +259,8 @@ for (const c of results) {
   for (const f of show_) console.log(`        ${f}`)
   if (!ALL && c.fails.length > 12) console.log(`        ... ${c.fails.length - 12} more (use --all)`)
 }
-console.log(`total: PASS=${pass} ALLOW=${allow} FAIL=${fail}`)
+const stale = wlRe.filter((w) => !w.used)
+for (const w of stale) console.log(`STALE ${w.crit} ${w.p}: whitelist row excused nothing`)
+console.log(`total: PASS=${pass} ALLOW=${allow} FAIL=${fail} STALE=${stale.length}`)
 process.exit(fail ? 1 : 0)
 JS
