@@ -13,13 +13,25 @@ pstack is poteto's answer to AI slop code. It turns an agent into an engineering
 
 ## Install
 
+Three steps on a new machine.
+
 ```bash
-git clone https://github.com/uzairansaruzi/p3-stack.git
-cd p3-stack
-./install.sh
+git clone https://github.com/maxzero66/p3-stack.git
+cd p3-stack && ./install.sh
 ```
 
-`install.sh` links every `skills/*` directory into `~/.agents/skills/`, where T3 Code reads skills. Use `./install.sh --project /path/to/repo` to install into a project's `.agents/skills/` instead. It also links `agents/` beside `skills/` (`~/.agents/agents`, or `<repo>/.agents/agents`), so the delegate briefs resolve as `../../agents/<name>.md` from `p3-mode/SKILL.md`. `p3-mode/scripts/check-plan.mjs` needs Node 20.11 or newer.
+Then open a new thread and run `/setup-p3`, which maps each role to a model.
+
+One command covers every harness already on the machine, at user level:
+
+| Directory | Harness |
+|---|---|
+| `~/.agents/skills/` | codex, tcodex, T3 Codex (created when missing) |
+| `<config home>/skills/` | claude, tclaude, T3 Claude, for each of `$CLAUDE_CONFIG_DIR`, `~/.tclaude`, `~/.claude` that exists |
+
+A name that is already taken is skipped and reported, never deleted or replaced. A name counts as p3-stack's only when it is a symlink into this repo. Codex reads `~/.tcodex/skills/`, `~/.codex/skills/`, and `$CODEX_HOME/skills/` beside `~/.agents/skills/`, so a name taken in any of those is skipped too. `--replace <name>` takes one over and prints what it pointed at first. `--target <dir>` installs somewhere else, `--project /path/to/repo` installs into `<repo>/.agents/skills/` and `<repo>/.claude/skills/`, `--uninstall` removes only the links that point into this repo, and `--dry-run` prints the plan with no changes.
+
+Skills are symlinked. Their `../<name>` and `../../agents/` references hold once the link is resolved to its real path, which `p3-mode` tells the agent to do, so they land in this repo's own `skills/` and `agents/` even when the install directory has a different skill under the same name; nothing else needs linking. Read literally from the install directory, they do not. Rerunning `./install.sh` after a pull or a move is safe: it repoints links from another p3-stack checkout that still exists and prunes links to skills that no longer exist. `install.sh` takes no GNU-only flags and runs on macOS as well as Linux. `p3-mode/scripts/check-plan.mjs` needs Node 20.11 or newer.
 
 ## Get started
 

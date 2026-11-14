@@ -22,7 +22,7 @@ If you are a delegated worker, your brief names exactly one skill directory (`sk
 | `agent-transcripts/*.jsonl` mining | `t3_thread_read`, `t3_thread_search`; `t3_queue` with `action` (`list`, `read`, `edit`, `reorder`, `cancel`, `promote_to_steer`) for queued input. |
 | `AskQuestion` | Ask plainly in the thread. `t3_pending_request` with `action` (`list`, `read`, `respond`) answers questions in other threads. |
 | `control-ui`, `control-cli` (from cursor-team-kit) | `preview_*` browser tools (`preview_act` with `action` for click, type, press, scroll) and `device_*` simulator tools; `preview_recording_start`/`preview_recording_stop` and `device_screenshot` for evidence; `html_preview` then `html_render` shows a page inline to the user. |
-| `~/.cursor/rules/pstack-models.mdc`, `/add-plugin` | `setup-p3` writes `p3-models.md`; install is a symlink of `skills/*` into `~/.agents/skills/` (see README). |
+| `~/.cursor/rules/pstack-models.mdc`, `/add-plugin` | `setup-p3` writes `p3-models.md`; install symlinks `skills/*` into each harness's user-level `skills/` directory: `~/.agents/skills/` and the `skills/` of every existing `$CLAUDE_CONFIG_DIR`, `~/.tclaude`, `~/.claude` (see README). |
 | `poteto-mode`, `poteto-agent`, `poteto-help`, `setup-pstack` | `p3-mode`, `agents/p3-agent.md`, `p3-help`, `setup-p3`. |
 | Cursor custom modes ("press option+enter") | Skills are invoked by name (`/p3-mode`). No mode toggles. |
 

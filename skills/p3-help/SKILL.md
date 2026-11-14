@@ -10,7 +10,7 @@ Answer the user's question about p3-stack, hand them a prompt they can send, and
 
 A message that asks for work, such as "use p3-stack to fix this bug", is not a help question. Read [`p3-mode`](../p3-mode/SKILL.md), do the work under it, and mention once that invoking `/p3-mode` keeps the work in this style.
 
-This file maps questions to the skills and playbooks that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here are repo-relative, so give the user the file's public copy: `https://github.com/uzairansaruzi/p3-stack/blob/main/` followed by its path.
+This file maps questions to the skills and playbooks that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here are repo-relative, so give the user the file's public copy: `https://github.com/maxzero66/p3-stack/blob/main/` followed by its path.
 
 ## Find out what they need
 
@@ -25,7 +25,7 @@ When `p3-models.md` is missing and it matters, ask whether the user wants to pic
 
 ## Get set up
 
-1. Install by cloning the repo and running `./install.sh`. It links every skill into `~/.agents/skills/`, where T3 Code reads skills; `./install.sh --project /path/to/repo` targets a project's `.agents/skills/` instead.
+1. Install by cloning the repo and running `./install.sh`. At user level it symlinks every skill into `~/.agents/skills/` for codex, tcodex, and T3 Codex, and into `<config home>/skills/` for claude, tclaude, and T3 Claude, for each of those homes that already exists. A name already taken by something else is skipped and reported, never replaced; `./install.sh --replace <name>` takes one over. `./install.sh --project /path/to/repo` installs into the repo instead, at `.agents/skills/` and `.claude/skills/`.
 2. Run [`/setup-p3`](../setup-p3/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes `p3-models.md`. The file applies to new sessions. Then it offers once each to generate a verification skill and a formal verification skill for the project, unless the project already has one.
 3. Start a real task with `/p3-mode`, a goal, and a check that can pass or fail.
 
@@ -37,7 +37,7 @@ If cost is the worry, say where the tokens go and how to spend fewer. p3-stack s
 
 `/p3-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one.
 
-Skills are invoked by name (`/p3-mode`). There are no mode toggles, so start each new task with `/p3-mode`. Mid-chat, "new task" makes the mode match a fresh playbook. `/p3-mode` already uses the `agents/p3-agent.md` brief for the delegates its playbook steps spawn. To get the same style from a delegate of your own, open its brief with that file's absolute path (`install.sh` links it at `../../agents/p3-agent.md` from `p3-mode`'s `SKILL.md`).
+Skills are invoked by name (`/p3-mode`). There are no mode toggles, so start each new task with `/p3-mode`. Mid-chat, "new task" makes the mode match a fresh playbook. `/p3-mode` already uses the `agents/p3-agent.md` brief for the delegates its playbook steps spawn. To get the same style from a delegate of your own, open its brief with that file's absolute path (`../../agents/p3-agent.md` resolves from `p3-mode`'s real path; see its `SKILL.md`).
 
 ## Pick a skill
 
