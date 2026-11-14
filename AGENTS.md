@@ -6,7 +6,7 @@ A skill reads as if it were written for T3 Code first. Keep pstack's sentences v
 
 ## Delegated workers
 
-If you are a delegated worker, your brief names exactly one file. Write only that file, create parent directories as needed, and run no git commands. Report back the file path, its line count, and the changes you made to pstack's version.
+If you are a delegated worker, your brief names exactly one skill directory (`skills/<name>/`). Write only files inside that directory, create parent directories as needed, and run no git commands. Report back each file path, its line count, and the changes you made to pstack's version.
 
 ## Cursor to T3 Code map
 
