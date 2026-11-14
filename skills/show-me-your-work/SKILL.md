@@ -64,7 +64,7 @@ Correct the log, not the story. The audit never edits or removes a row, even an 
 
 ## Cross-model review of the trail
 
-Before handing back, spawn a reviewer with `delegate_task` (`mode: "async"`, drained with `task_status`) on a different provider or model family from the one that did the work, resolved through `orchestrator_capabilities`; never hardcode a slug. Self-review is not a substitute. Its brief stands alone (T3 child agents get only the brief, never this conversation) and says read-only: inspect only, no writes. Set each delegate's effort in `target.options`, plus speed (`fastMode` or `serviceTier`) when the model offers it, per the Subagents section of the **p3-mode** skill.
+Before handing back, spawn a reviewer with `delegate_task` (`mode: "async"`, drained with `task_status`) on a different model family from the one that did the work, resolved through `orchestrator_capabilities`; never hardcode a slug. Self-review is not a substitute. Its brief stands alone (T3 child agents get only the brief, never this conversation) and says read-only: inspect only, no writes. Set each delegate's effort in `target.options`, plus speed (`fastMode` or `serviceTier`) when the model offers it, per the Subagents section of the **p3-mode** skill.
 
 The reviewer reads the audit trail and the run's transcript with `t3_thread_read`, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky.
 

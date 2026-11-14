@@ -12,7 +12,7 @@ Write `p3-models.md`, a file that sets p3-stack's model per role. Default locati
 
 ### 1. Detect available models
 
-Call `orchestrator_capabilities`. It lists the providers and models you can pass to `delegate_task` in this session, custom models included, with each one's provider instance ID, any reasoning options, and any speed option (`fastMode` or `serviceTier`). That is the only source. If it returns nothing, stop and tell the user. Never write a provider or model it did not return. `inherit-parent` is always valid even though it is not a detected model.
+Call `orchestrator_capabilities`. It lists a short set of the providers and models you can pass to `delegate_task` in this session, with each one's provider instance ID, any reasoning options, and any speed option (`fastMode` or `serviceTier`). The list is not exhaustive. Any catalog model works, so when the user names a model or a default candidate is not in the list, call it again with `search` set to that name before you judge it unavailable. The tool is the only source. If it returns nothing, stop and tell the user. Never write a provider or model it did not return. `inherit-parent` is always valid even though it is not a detected model.
 
 ### 2. Load current state
 
@@ -27,7 +27,7 @@ The roles are the labels shown in step 5. If `p3-models.md` already exists at th
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** Build the working table. On a fresh run, give code roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`), the explorer, investigator, and swarm roles, and `reflect tooling` the fastest strong coding model detected. Give `judgment and prose`, `hardest tasks`, the explainer, and the synthesizers the most capable model detected. Fill each panel role with one entry per distinct provider detected, up to two. On a re-run, keep any role the user changed.
+**(b) Apply it.** Build the working table. On a fresh run, give code roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`), the explorer, investigator, and swarm roles, and `reflect tooling` the fastest strong coding model detected. Give `judgment and prose`, `hardest tasks`, the explainer, and the synthesizers the most capable model detected. Fill each panel role with one entry per distinct model family detected, up to two. A family comes from the model id (Claude, GPT, DeepSeek, GLM, Kimi), not from the provider that serves it. On a re-run, keep any role the user changed.
 
 When the catalog exposes reasoning options for a model, set each real entry's effort option from the budget: `unlimited`, `large`, `medium`, and `small` take `max`, `xhigh`, `high`, or `medium`. The ladder is `max` > `xhigh` > `high` > `medium` > `low`. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. `inherit-parent` does not change. Under `unlimited`, a model whose top option is `xhigh` stays at `xhigh`. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded. Speed does not follow the budget. For each real entry, read the model's speed option from the catalog: `fastMode` for Claude models, `serviceTier` for Codex models. Record that option's name as the entry's `speed`, or `n/a` when the model has none. The entry's default stays standard speed. The parent turns fast on at spawn time, only when someone is blocked right now, per the Subagents section of the **p3-mode** skill. With `n/a` the parent adjusts effort only.
 
@@ -35,7 +35,7 @@ When the catalog exposes reasoning options for a model, set each real entry's ef
 
 ### 4. Validate
 
-Every real entry written must be in the `orchestrator_capabilities` result, under the provider instance it came from. `inherit-parent` always passes. If a chosen entry is not available, stop and ask again.
+Every real entry written must be in the `orchestrator_capabilities` result, under the provider instance it came from. When the short list lacks an entry, call `orchestrator_capabilities` with `search` set to its model and accept it only if that result returns it under the same provider instance. `inherit-parent` always passes. If a chosen entry is still not available, stop and ask again.
 
 ### 5. Write the file
 

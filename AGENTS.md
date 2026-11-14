@@ -30,7 +30,7 @@ Everything else in pstack transfers as written: the principles, the playbook sha
 
 ## Role line format
 
-Each role line in `p3-models.md` is one or more entries separated by `; `. An entry reads `<providerInstanceId>/<model> (<effort>, speed: <fastMode|serviceTier|n/a>)`, or is the whole word `inherit-parent`. `setup-p3` writes the line, and `p3-mode`'s Subagents section owns how an entry resolves to `target.providerInstanceId`, `target.model`, and `target.options`, and the rule for raising effort and using the speed option (`fastMode: true` or `serviceTier: "priority"`).
+Each role line in `p3-models.md` is one or more entries separated by `; `. An entry reads `<providerInstanceId>/<model> (<effort>, speed: <fastMode|serviceTier|n/a>)`, or is the whole word `inherit-parent`. An entry may add `, family: <name>` inside the parentheses when the model id does not make its family obvious. Families go by model id, never by provider. `setup-p3` writes the line, and `p3-mode`'s Subagents section owns how an entry resolves to `target.providerInstanceId`, `target.model`, and `target.options`, and the rule for raising effort and using the speed option (`fastMode: true` or `serviceTier: "priority"`).
 
 ## Role names
 

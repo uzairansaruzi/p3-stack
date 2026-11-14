@@ -28,7 +28,7 @@ Skip Phase A only when the work is genuinely greenfield with no surrounding syst
 
 Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Send one `delegate_task` per runner, `mode: "async"`, and drain with `task_status`. Every brief stands alone: child agents get only the brief, never this thread's context. Each brief carries the task, the grounding artifacts, and `references/runner-prompt.md`.
 
-Take the runners from the `architect runners` line in `p3-models.md`, in place of the `arena runners` line. Resolve the roles against `orchestrator_capabilities`; never hardcode a model. If the file or that line is missing, run `setup-p3` or pick two models from different providers in `orchestrator_capabilities`. Alias and rejected entries follow the runner rules in the **arena** skill's Phase A.
+Take the runners from the `architect runners` line in `p3-models.md`, in place of the `arena runners` line. Resolve the roles against `orchestrator_capabilities`; never hardcode a model. If the file or that line is missing, run `setup-p3` or pick two models from different families in `orchestrator_capabilities`. Alias and rejected entries follow the runner rules in the **arena** skill's Phase A.
 
 Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
 
