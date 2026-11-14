@@ -2,10 +2,10 @@
 
 upstream: https://github.com/cursor/plugins
 subtree: pstack/
-pin: 4e5b1cf2ccb0ea3716f08c8ee0a5856b5ab93536
-pin-date: 2026-10-05
+pin: c742dd61706fbacc1b95f1a20b7b988cf096ce6c
+pin-date: 2026-10-27
 pin-version: 0.15.10
-synced-on: —
+synced-on: 2026-11-14
 sync-target: c742dd61706fbacc1b95f1a20b7b988cf096ce6c
 sync-spec: docs/sync-spec-c742dd6.md
 
@@ -16,27 +16,27 @@ sync-spec: docs/sync-spec-c742dd6.md
 
 | 上游 | p3 | 对齐到 | 状态 | 备注 |
 |---|---|---|---|---|
-| skills/architect | skills/architect | 4e5b1cf | ported |  |
-| skills/arena | skills/arena | 4e5b1cf | ported |  |
+| skills/architect | skills/architect | c742dd6 | ported |  |
+| skills/arena | skills/arena | c742dd6 | ported |  |
 | skills/automate-me | skills/automate-me | c742dd6 | ported |  |
 | skills/benchmark-checklist | skills/benchmark-checklist | c742dd6 | ported |  |
 | skills/blast-radius | skills/blast-radius | c742dd6 | ported |  |
 | skills/bro | skills/bro | c742dd6 | ported |  |
 | skills/correct | skills/correct | c742dd6 | ported |  |
-| skills/create-formal-verification-skill | skills/create-formal-verification-skill | — | pending | 新技能，批次 B4 |
+| skills/create-formal-verification-skill | skills/create-formal-verification-skill | c742dd6 | ported | 新技能 |
 | skills/create-verification-skill | skills/create-verification-skill | c742dd6 | ported |  |
 | skills/figure-it-out | skills/figure-it-out | c742dd6 | ported |  |
-| skills/how | skills/how | 4e5b1cf | ported |  |
-| skills/in-your-own-words | skills/in-your-own-words | — | pending | 新技能，批次 B4 |
-| skills/interrogate | skills/interrogate | 4e5b1cf | ported |  |
-| skills/ketchup | skills/ketchup | — | pending | 新技能，批次 B4 |
-| skills/ketchup-video | skills/ketchup-video | — | pending | 新技能，批次 B4 |
-| skills/maintain-formal-verification-skill | skills/maintain-formal-verification-skill | — | pending | 新技能，批次 B4 |
+| skills/how | skills/how | c742dd6 | ported |  |
+| skills/in-your-own-words | skills/in-your-own-words | c742dd6 | ported | 新技能 |
+| skills/interrogate | skills/interrogate | c742dd6 | ported |  |
+| skills/ketchup | skills/ketchup | c742dd6 | ported | 新技能 |
+| skills/ketchup-video | skills/ketchup-video | c742dd6 | ported | 新技能 |
+| skills/maintain-formal-verification-skill | skills/maintain-formal-verification-skill | c742dd6 | ported | 新技能 |
 | skills/maintain-verification-skill | skills/maintain-verification-skill | c742dd6 | ported |  |
 | skills/make-bot-ui | skills/make-bot-ui | c742dd6 | ported |  |
 | skills/no-comments | skills/no-comments | c742dd6 | ported |  |
-| skills/poteto-help | skills/p3-help | 4e5b1cf | ported | 改名 |
-| skills/poteto-mode | skills/p3-mode | 4e5b1cf | ported | 改名 |
+| skills/poteto-help | skills/p3-help | c742dd6 | ported | 改名 |
+| skills/poteto-mode | skills/p3-mode | c742dd6 | ported | 改名 |
 | skills/principle-attack-the-premise | skills/principle-attack-the-premise | c742dd6 | ported |  |
 | skills/principle-boundary-discipline | skills/principle-boundary-discipline | c742dd6 | ported |  |
 | skills/principle-build-the-lever | skills/principle-build-the-lever | c742dd6 | ported |  |
@@ -62,21 +62,21 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/principle-test-behavior-not-implementation | skills/principle-test-behavior-not-implementation | c742dd6 | ported |  |
 | skills/principle-type-system-discipline | skills/principle-type-system-discipline | c742dd6 | ported |  |
 | skills/recall | skills/recall | c742dd6 | ported |  |
-| skills/reflect | skills/reflect | 4e5b1cf | ported |  |
-| skills/setup-pstack | skills/setup-p3 | 4e5b1cf | ported | 改名 |
-| skills/sharpen | skills/sharpen | — | pending | 新技能，批次 B4 |
+| skills/reflect | skills/reflect | c742dd6 | ported |  |
+| skills/setup-pstack | skills/setup-p3 | c742dd6 | ported | 改名 |
+| skills/sharpen | skills/sharpen | c742dd6 | ported | 新技能 |
 | skills/show-me-your-work | skills/show-me-your-work | c742dd6 | ported |  |
-| skills/statechart | skills/statechart | — | pending | 新技能，批次 B4 |
-| skills/swarm | skills/swarm | 4e5b1cf | ported |  |
+| skills/statechart | skills/statechart | c742dd6 | ported | 新技能 |
+| skills/swarm | skills/swarm | c742dd6 | ported |  |
 | skills/tdd | skills/tdd | c742dd6 | ported |  |
 | skills/teach | skills/teach | c742dd6 | ported |  |
 | skills/technical-writing | skills/technical-writing | c742dd6 | ported |  |
 | skills/typescript-best-practices | skills/typescript-best-practices | c742dd6 | ported | 保留 p3 去掉的 paths: frontmatter 字段 |
 | skills/unslop | skills/unslop | c742dd6 | ported |  |
-| skills/why | skills/why | 4e5b1cf | ported |  |
-| agents/poteto-agent.md | agents/p3-agent.md | 4e5b1cf | ported | 改名 |
+| skills/why | skills/why | c742dd6 | ported |  |
+| agents/poteto-agent.md | agents/p3-agent.md | c742dd6 | ported | 改名 |
 | agents/comment-sicko.md | agents/comment-sicko.md | c742dd6 | ported | |
-| README.md | README.md | 4e5b1cf | ported | p3 README 已重写，只摘技能表语义，批次 B5 |
+| README.md | README.md | c742dd6 | ported | p3 README 已重写，只摘技能表语义 |
 
 ## 有意缺口与忽略路径
 
@@ -97,7 +97,6 @@ sync-spec: docs/sync-spec-c742dd6.md
 
 | 判据 | 路径 | 理由 |
 |---|---|---|
-| P4 schedule | skills/p3-help/SKILL.md | p3 改成事件唤醒与 schedule_task 按需提及，未逐句保留 /loop；B3 改写 p3-help 时复核 |
 | P4 schedule | skills/p3-mode/playbooks/visual-parity.md | p3 改成事件唤醒，不再用定时 |
 | P4 preview | skills/p3-help/SKILL.md | p3-help 没有 control-ui/cli 对应句；B3 改写时复核 |
 | P5 | agents/p3-agent.md | T3 改写最深，B3 重写首段 |
@@ -105,19 +104,18 @@ sync-spec: docs/sync-spec-c742dd6.md
 | P5 | skills/p3-mode/playbooks/babysit.md | T3 改写最深（watch_pull_request 事件唤醒） |
 | P5 | skills/p3-mode/playbooks/worktree-cleanup.md | T3 改写最深（t3_worktree_* 取代审计脚本） |
 | P5 | skills/setup-p3/SKILL.md | T3 改写最深（角色表与 providerInstanceId 写法） |
-| P6 | skills/architect/references/runner-prompt.md | 上游同样指向不存在的 references/rationale-template.md |
 | P6 | skills/setup-p3/SKILL.md | T3 侧有意加 disable-model-invocation |
 | P8 | agents/p3-agent.md | 基线已超出 |
 | P8 | skills/figure-it-out/SKILL.md | 基线已超出 |
-| P8 | skills/how/references/explorer-prompt.md | 基线已超出：多出 T3 工具说明 |
-| P8 | skills/p3-mode/playbooks/autopilot-full.md | 基线已超出，B3 重写 |
-| P8 | skills/p3-mode/playbooks/autopilot-stack.md | 基线已超出，B3 重写 |
 | P8 | skills/p3-mode/playbooks/babysit.md | 基线已超出：watch_pull_request 说明 |
-| P8 | skills/p3-mode/playbooks/orchestrate.md | 基线已超出；D2=A 重写后应能去掉本行 |
 | P8 | skills/p3-mode/playbooks/pause-safely.md | 基线已超出 |
-| P8 
 | P8 | skills/show-me-your-work/SKILL.md | 基线已超出 |
-| P8 | skills/why/references/investigator-prompt.md | 基线已超出：T3 改写 |
+| P8 | skills/how/references/explorer-prompt.md | +2 行：T3 子 agent 只读说明 |
+| P8 | skills/ketchup-video/SKILL.md | D3=B：HTML 页 + preview_recording 录制步骤需写明 |
+| P8 | skills/p3-mode/playbooks/worktree-cleanup.md | +2 行：t3_worktree_* 取代审计脚本 |
+| P8 | skills/statechart/SKILL.md | +1 行：离线时设 TLA2TOOLS/JAVA 的出路 |
+| P8 | skills/statechart/references/render.md | +1 行：T3 下用图片语法或 html_render 展示 SVG |
+| P8 | skills/why/references/investigator-prompt.md | +2 行：T3 子任务可写，需在 brief 写明只读 |
 | P8 | skills/why/references/synthesizer-prompt.md | 基线已超出：T3 改写 |
 
 ## 逐字搬运
@@ -150,3 +148,6 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/unslop/SKILL.md | B1 三方合并后与上游逐字相同 |
 | skills/typescript-best-practices/references/patterns.md | B1 三方合并后与上游逐字相同 |
 | skills/principle-build-the-lever/SKILL.md | B1 三方合并后与上游逐字相同 |
+| skills/in-your-own-words/SKILL.md | 新技能，与上游逐字相同 |
+| skills/sharpen/SKILL.md | 新技能，与上游逐字相同 |
+| skills/statechart/scripts/** | D6=A：整目录原样搬 |
