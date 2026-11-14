@@ -1,0 +1,8 @@
+{
+  "name": "p3-mode-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test check-plan.test.mjs"
+  }
+}
