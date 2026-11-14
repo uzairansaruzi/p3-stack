@@ -637,3 +637,18 @@ git show 4e5b1cf:pstack/skills/why/SKILL.md > /tmp/base
 git show c742dd6:pstack/skills/why/SKILL.md > /tmp/theirs
 git merge-file -p skills/why/SKILL.md /tmp/base /tmp/theirs   # 先把三者套改名映射
 ```
+
+## 8. 人工裁决（2026-11-14 批准）
+
+| 项 | 裁决 |
+|---|---|
+| D1 | 确认 base pin `4e5b1cf` |
+| D2 | A：采纳上游薄版 `orchestrate`，用 T3 原生工具重写 Topology 与 Supervision |
+| D3 | B：`ketchup-video` 用 HTML 页 + `preview_recording_start`/`preview_recording_stop` 录制出视频 |
+| D4 | B：引入 `check-plan.mjs` 与测试到 `skills/p3-mode/scripts/`，playbook 改回运行脚本 |
+| D5 | A：本轮不带 `docs/guide/` |
+| D6 | A：`statechart/scripts/` 整目录原样搬，可逐字节对账 |
+| D7 | B：本次同步起 delegated worker 一次写一个技能目录；先改 `AGENTS.md` 对应一行 |
+| D8 | B：档位加速度；`setup-p3` 角色行加 `speed`，紧急时取 `fastMode` 或 `serviceTier: "priority"`，模型无该选项时写明回退为只调档位 |
+| D9 | A：实施前先校正 `AGENTS.md` 工具表；权威来源为当前 T3 运行时 `orchestrator_capabilities` 与工具清单中的实际名称 |
+| 默认项 | 默认模型列表跟上游减为 2 项；Claude Code 安装段不进 p3 |
