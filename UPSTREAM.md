@@ -18,14 +18,14 @@ sync-spec: docs/sync-spec-c742dd6.md
 |---|---|---|---|---|
 | skills/architect | skills/architect | 4e5b1cf | ported |  |
 | skills/arena | skills/arena | 4e5b1cf | ported |  |
-| skills/automate-me | skills/automate-me | 4e5b1cf | ported |  |
-| skills/benchmark-checklist | skills/benchmark-checklist | 4e5b1cf | ported |  |
-| skills/blast-radius | skills/blast-radius | 4e5b1cf | ported |  |
+| skills/automate-me | skills/automate-me | c742dd6 | ported |  |
+| skills/benchmark-checklist | skills/benchmark-checklist | c742dd6 | ported |  |
+| skills/blast-radius | skills/blast-radius | c742dd6 | ported |  |
 | skills/bro | skills/bro | c742dd6 | ported |  |
 | skills/correct | skills/correct | c742dd6 | ported |  |
 | skills/create-formal-verification-skill | skills/create-formal-verification-skill | — | pending | 新技能，批次 B4 |
-| skills/create-verification-skill | skills/create-verification-skill | 4e5b1cf | ported |  |
-| skills/figure-it-out | skills/figure-it-out | 4e5b1cf | ported |  |
+| skills/create-verification-skill | skills/create-verification-skill | c742dd6 | ported |  |
+| skills/figure-it-out | skills/figure-it-out | c742dd6 | ported |  |
 | skills/how | skills/how | 4e5b1cf | ported |  |
 | skills/in-your-own-words | skills/in-your-own-words | — | pending | 新技能，批次 B4 |
 | skills/interrogate | skills/interrogate | 4e5b1cf | ported |  |
@@ -34,7 +34,7 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/maintain-formal-verification-skill | skills/maintain-formal-verification-skill | — | pending | 新技能，批次 B4 |
 | skills/maintain-verification-skill | skills/maintain-verification-skill | c742dd6 | ported |  |
 | skills/make-bot-ui | skills/make-bot-ui | c742dd6 | ported |  |
-| skills/no-comments | skills/no-comments | 4e5b1cf | ported |  |
+| skills/no-comments | skills/no-comments | c742dd6 | ported |  |
 | skills/poteto-help | skills/p3-help | 4e5b1cf | ported | 改名 |
 | skills/poteto-mode | skills/p3-mode | 4e5b1cf | ported | 改名 |
 | skills/principle-attack-the-premise | skills/principle-attack-the-premise | c742dd6 | ported |  |
@@ -61,11 +61,11 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/principle-subtract-before-you-add | skills/principle-subtract-before-you-add | c742dd6 | ported |  |
 | skills/principle-test-behavior-not-implementation | skills/principle-test-behavior-not-implementation | c742dd6 | ported |  |
 | skills/principle-type-system-discipline | skills/principle-type-system-discipline | c742dd6 | ported |  |
-| skills/recall | skills/recall | 4e5b1cf | ported |  |
+| skills/recall | skills/recall | c742dd6 | ported |  |
 | skills/reflect | skills/reflect | 4e5b1cf | ported |  |
 | skills/setup-pstack | skills/setup-p3 | 4e5b1cf | ported | 改名 |
 | skills/sharpen | skills/sharpen | — | pending | 新技能，批次 B4 |
-| skills/show-me-your-work | skills/show-me-your-work | 4e5b1cf | ported |  |
+| skills/show-me-your-work | skills/show-me-your-work | c742dd6 | ported |  |
 | skills/statechart | skills/statechart | — | pending | 新技能，批次 B4 |
 | skills/swarm | skills/swarm | 4e5b1cf | ported |  |
 | skills/tdd | skills/tdd | c742dd6 | ported |  |
