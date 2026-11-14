@@ -19,7 +19,7 @@ cd p3-stack
 ./install.sh
 ```
 
-`install.sh` links every `skills/*` directory into `~/.agents/skills/`, where T3 Code reads skills. Use `./install.sh --project /path/to/repo` to install into a project's `.agents/skills/` instead.
+`install.sh` links every `skills/*` directory into `~/.agents/skills/`, where T3 Code reads skills. Use `./install.sh --project /path/to/repo` to install into a project's `.agents/skills/` instead. It also links `agents/` beside `skills/` (`~/.agents/agents`, or `<repo>/.agents/agents`), so the delegate briefs resolve as `../../agents/<name>.md` from `p3-mode/SKILL.md`. `p3-mode/scripts/check-plan.mjs` needs Node 20.11 or newer.
 
 ## Get started
 
