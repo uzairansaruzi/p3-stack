@@ -92,7 +92,7 @@ sync-spec: docs/sync-spec-c742dd6.md
 | skills/poteto-mode/scripts/worktree-audit.sh | ignore | 由 git worktree list --porcelain 与 gh 取代 |
 | skills/poteto-mode/playbooks/**（仅 Origin forge 分支） | note | 上游 playbook 里的 Origin forge 分支已删，p3 只保留 gh；这是正文缺口，不是文件缺口，不进忽略表 |
 
-`install.sh` 是 p3 独有的安装方式：用户级多目标，把 `skills/*` 软链进 `~/.agents/skills` 与各 Claude 配置家目录的 `skills/`，同名外来条目跳过、不覆盖。上游靠 `/add-plugin` 与 `.cursor-plugin/` 清单安装，没有对应脚本，所以不进映射表。
+`install.sh` 是 p3 独有的安装方式：用户级多目标，把 `skills/*` 软链进 `~/.agents/skills` 与各 Claude 配置家目录的 `skills/`，同名外来条目跳过、不覆盖（`--replace <name>` 显式接管）。上游靠 `/add-plugin` 与 `.cursor-plugin/` 清单安装，没有对应脚本，所以不进映射表。
 
 ## 白名单
 

@@ -62,7 +62,7 @@ assert_has() { # label text needle
 }
 
 snapshot() { # dir: every entry with its link target
-  (cd "$1" && find . -mindepth 1 | LC_ALL=C sort | while IFS= read -r p; do
+  (cd "$1" && find . ! -path . | LC_ALL=C sort | while IFS= read -r p; do
     if [ -L "$p" ]; then printf '%s -> %s\n' "$p" "$(readlink "$p")"; else printf '%s\n' "$p"; fi
   done)
 }
@@ -152,7 +152,7 @@ ln -s "$E/skills/tdd" "$H/.tcodex/skills/tdd"
 run "$H" >/dev/null
 ln -s "$ROOT/agents" "$H/.agents/agents"
 out="$(run "$H" --uninstall)"
-assert_has "--uninstall reports removals" "$out" "removed"
+assert_has "--uninstall reports the exact count" "$out" "done: $((SKILL_COUNT * 2 + SKILL_COUNT - 1 - 1)) links removed"
 assert_count "~/.agents/skills is emptied" "$H/.agents/skills" "0"
 assert_count "~/.tclaude/skills keeps only the foreign entry" "$H/.tclaude/skills" "1"
 assert_link "the foreign symlink survives" "$H/.tclaude/skills/tdd" "$E/skills/tdd"
@@ -194,6 +194,97 @@ rc=$?
 run "$(tmp)" --target >/dev/null 2>&1
 rc=$?
 [ "$rc" = 2 ] && ok "missing value exits 2" || no "missing value exits 2" "exit $rc"
+
+# --- values that look like options, or are empty, are rejected ----------------
+
+for args in "--target --dry-run" "--replace --uninstall" "--project --help"; do
+  W="$(tmp)"
+  (cd "$W" && run "$(tmp)" $args >/dev/null 2>&1)
+  rc=$?
+  [ "$rc" = 2 ] && ok "$args exits 2" || no "$args exits 2" "exit $rc"
+  assert_count "$args writes nothing in the working dir" "$W" "0"
+done
+W="$(tmp)"
+(cd "$W" && run "$(tmp)" --target '' >/dev/null 2>&1)
+rc=$?
+[ "$rc" = 2 ] && ok "empty --target exits 2" || no "empty --target exits 2" "exit $rc"
+assert_count "empty --target writes nothing" "$W" "0"
+
+# --- a dangling link into this repo is ours: pruned and uninstalled -----------
+
+H="$(tmp)"
+mkdir -p "$H/.claude/skills"
+ln -s "$ROOT/skills/removed-skill" "$H/.claude/skills/removed-skill"
+out="$(run "$H")"
+assert_has "install prunes a dangling link into this repo" "$out" "prune removed-skill"
+assert_absent "the dangling link is gone after install" "$H/.claude/skills/removed-skill"
+ln -s "$ROOT/skills/removed-skill" "$H/.claude/skills/removed-skill"
+run "$H" --uninstall >/dev/null
+assert_absent "uninstall removes a dangling link into this repo" "$H/.claude/skills/removed-skill"
+E="$(tmp)"
+ln -s "$E/gone" "$H/.claude/skills/foreign-dangling"
+run "$H" >/dev/null
+run "$H" --uninstall >/dev/null
+assert_link "a dangling foreign link is never touched" "$H/.claude/skills/foreign-dangling" "$E/gone"
+
+# --- links from another p3-stack checkout are repointed -----------------------
+
+H="$(tmp)"
+B="$(tmp)"
+mkdir -p "$H/.claude/skills"
+cp -R "$ROOT/skills" "$ROOT/install.sh" "$B/"
+ln -s "$B/skills/p3-mode" "$H/.claude/skills/p3-mode"
+out="$(run "$H")"
+assert_has "a link from another checkout is relinked" "$out" "relink p3-mode"
+assert_link "the relinked entry points into this repo" "$H/.claude/skills/p3-mode" "$ROOT/skills/p3-mode"
+
+# --- HOME with a trailing slash still prints ~ paths -------------------------
+
+H="$(tmp)"
+mkdir -p "$H/.claude"
+out="$(env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H/" "$INSTALL")"
+assert_has "HOME/ prints ~/.claude/skills" "$out" "~/.claude/skills"
+
+# --- HOME and targets with spaces --------------------------------------------
+
+S="$(tmp)/my home"
+mkdir -p "$S/.claude"
+run "$S" >/dev/null
+assert_count "a HOME with a space is filled" "$S/.claude/skills" "$SKILL_COUNT"
+
+# --- install.sh called through a symlink -------------------------------------
+
+H="$(tmp)"
+BIN="$(tmp)"
+ln -s "$INSTALL" "$BIN/p3-install"
+mkdir -p "$H/.claude"
+env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H" "$BIN/p3-install" >/dev/null
+rc=$?
+[ "$rc" = 0 ] && ok "a symlinked install.sh exits 0" || no "a symlinked install.sh exits 0" "exit $rc"
+assert_link "a symlinked install.sh links into the repo" "$H/.claude/skills/p3-mode" "$ROOT/skills/p3-mode"
+assert_absent "a symlinked install.sh makes no '*' link" "$H/.claude/skills/*"
+
+# --- CODEX_HOME and ~/.codex names block ~/.agents/skills ---------------------
+
+H="$(tmp)"
+X="$(tmp)"
+E="$(tmp)"
+mkdir -p "$H/.codex/skills" "$X/skills"
+ln -s "$E" "$H/.codex/skills/tdd"
+ln -s "$E" "$X/skills/teach"
+env -u CLAUDE_CONFIG_DIR HOME="$H" CODEX_HOME="$X" "$INSTALL" >/dev/null
+assert_absent "~/.codex/skills/tdd blocks ~/.agents/skills/tdd" "$H/.agents/skills/tdd"
+assert_absent "CODEX_HOME/skills/teach blocks ~/.agents/skills/teach" "$H/.agents/skills/teach"
+
+# --- --dry-run --uninstall changes nothing -----------------------------------
+
+H="$(tmp)"
+mkdir -p "$H/.claude"
+run "$H" >/dev/null
+snap1="$(snapshot "$H")"
+run "$H" --uninstall --dry-run >/dev/null
+snap2="$(snapshot "$H")"
+[ "$snap1" = "$snap2" ] && ok "--uninstall --dry-run changes nothing" || no "--uninstall --dry-run changes nothing"
 
 printf '\n%d passed, %d failed\n' "$PASS" "$FAIL"
 [ "$FAIL" = 0 ]

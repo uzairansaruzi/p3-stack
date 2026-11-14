@@ -4,10 +4,24 @@
 # already exists. Entries that are not p3-stack links are skipped, never removed.
 set -euo pipefail
 
-REPO="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+# Follow symlinks to this script, so a link such as ~/bin/p3-install works.
+self="${BASH_SOURCE[0]}"
+while [ -L "$self" ]; do
+  link="$(readlink "$self")"
+  case "$link" in
+    /*) self="$link" ;;
+    *) self="$(dirname "$self")/$link" ;;
+  esac
+done
+REPO="$(cd -P "$(dirname "$self")" && pwd -P)"
 SKILLS_SRC="$REPO/skills"
 AGENTS_SRC="$REPO/agents"
+if [ ! -f "$SKILLS_SRC/p3-mode/SKILL.md" ]; then
+  printf 'error: %s is not a p3-stack checkout (no skills/p3-mode/SKILL.md)\n' "$REPO" >&2
+  exit 2
+fi
 HOME="${HOME:?HOME is not set}"
+while [ "$HOME" != "/" ] && [ "${HOME%/}" != "$HOME" ]; do HOME="${HOME%/}"; done
 
 DRY=0
 UNINSTALL=0
@@ -80,17 +94,41 @@ disp() {
 
 # --- ownership ---------------------------------------------------------------
 
+# link_target <link>: absolute target of a symlink, resolved even when the
+# target no longer exists (a skill removed upstream leaves a dangling link).
+link_target() {
+  local t
+  t="$(readlink "$1")"
+  case "$t" in
+    /*) resolve "$t" ;;
+    *) resolve "$(dirname "$1")/$t" ;;
+  esac
+}
+
+# own_skill <entry>: a symlink into this checkout's skills/, dangling or not.
 own_skill() {
   [ -L "$1" ] || return 1
-  case "$(resolve "$1")" in
+  case "$(link_target "$1")" in
     "$REPO"/skills/*) return 0 ;;
   esac
   return 1
 }
 
+# other_checkout <entry> <name>: a symlink to skills/<name> of another p3-stack
+# checkout that still exists (same layout, has skills/p3-mode/SKILL.md).
+other_checkout() {
+  local t root
+  [ -L "$1" ] || return 1
+  t="$(link_target "$1")"
+  [ "$(basename "$t")" = "$2" ] || return 1
+  root="$(dirname "$t")"
+  [ "$(basename "$root")" = "skills" ] || return 1
+  [ -f "$root/p3-mode/SKILL.md" ] && [ -f "$(dirname "$root")/install.sh" ]
+}
+
 own_agents() {
   [ -L "$1" ] || return 1
-  [ "$(resolve "$1")" = "$(resolve "$AGENTS_SRC")" ]
+  [ "$(link_target "$1")" = "$(resolve "$AGENTS_SRC")" ]
 }
 
 replace_wanted() {
@@ -142,11 +180,18 @@ codex_dirs() {
 
 # --- argument parsing --------------------------------------------------------
 
+# need_value <option> <what> <argc> <value>: the option's value must be
+# present, non-empty, and not another option.
+need_value() {
+  if [ "$3" -lt 2 ] || [ -z "$4" ]; then die "$1 needs $2"; fi
+  case "$4" in -*) die "$1 needs $2, got option $4" ;; esac
+}
+
 while [ $# -gt 0 ]; do
   case "$1" in
-    --target)    [ $# -ge 2 ] || die "--target needs a directory"; EXPLICIT_TARGETS+=("$2"); shift 2 ;;
-    --project)   [ $# -ge 2 ] || die "--project needs a repo path"; PROJECTS+=("$2"); shift 2 ;;
-    --replace)   [ $# -ge 2 ] || die "--replace needs a skill name"; REPLACE+=("$2"); shift 2 ;;
+    --target)    need_value "$1" "a directory" $# "${2-}"; EXPLICIT_TARGETS+=("$2"); shift 2 ;;
+    --project)   need_value "$1" "a repo path" $# "${2-}"; PROJECTS+=("$2"); shift 2 ;;
+    --replace)   need_value "$1" "a skill name" $# "${2-}"; REPLACE+=("$2"); shift 2 ;;
     --uninstall) UNINSTALL=1; shift ;;
     --dry-run)   DRY=1; shift ;;
     -h|--help)   usage; exit 0 ;;
@@ -257,21 +302,19 @@ while [ "$i" -lt "${#T_DIR[@]}" ]; do
     entry="$dir/$name"
 
     if [ -L "$entry" ]; then
-      if own_skill "$entry"; then
-        if [ "$(resolve "$entry")" = "$(resolve "$src")" ]; then
-          linked=$((linked + 1))
-        else
-          # ours, but from another checkout of this repo: repoint
-          reasons+=("relink $name: was $(disp "$(resolve "$entry")")")
-          [ "$DRY" = 1 ] || { rm "$entry"; ln -s "$src" "$entry"; }
-          linked=$((linked + 1))
-        fi
+      if own_skill "$entry" && [ "$(link_target "$entry")" = "$(resolve "$src")" ]; then
+        linked=$((linked + 1))
+      elif own_skill "$entry" || other_checkout "$entry" "$name"; then
+        # ours but stale, or the same skill from another p3-stack checkout: repoint
+        reasons+=("relink $name: was $(disp "$(link_target "$entry")")")
+        [ "$DRY" = 1 ] || { rm "$entry"; ln -s "$src" "$entry"; }
+        linked=$((linked + 1))
       elif replace_wanted "$name"; then
-        reasons+=("replace $name: was $(disp "$(resolve "$entry")")")
+        reasons+=("replace $name: was $(disp "$(link_target "$entry")")")
         [ "$DRY" = 1 ] || { rm "$entry"; ln -s "$src" "$entry"; }
         replaced=$((replaced + 1))
       else
-        reasons+=("skip $name: foreign symlink -> $(disp "$(resolve "$entry")")")
+        reasons+=("skip $name: foreign symlink -> $(disp "$(link_target "$entry")")")
         skipped=$((skipped + 1))
       fi
       continue
@@ -312,6 +355,14 @@ EOF
 
     [ "$DRY" = 1 ] || ln -s "$src" "$entry"
     linked=$((linked + 1))
+  done
+
+  # links into this repo whose skill no longer exists (removed upstream)
+  for entry in "$dir"/*; do
+    if [ -L "$entry" ] && own_skill "$entry" && [ ! -e "$entry" ]; then
+      reasons+=("prune $(basename "$entry"): skill no longer in this repo")
+      [ "$DRY" = 1 ] || rm "$entry"
+    fi
   done
 
   if [ "$DRY" = 1 ]; then
