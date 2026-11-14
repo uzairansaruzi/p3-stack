@@ -14,8 +14,8 @@ If you are a delegated worker, your brief names exactly one skill directory (`sk
 |---|---|
 | `Task` tool, `subagent_type`, `run_in_background` | `delegate_task` with a self-contained brief; `mode: "async"` for background work; `task_status` to drain; `task_cancel` to stop |
 | Model slugs (`claude-opus-5-5-max`, `grok-4.7-xhigh-fast`, `gpt-5.6-sol-max`) | Named roles resolved from `orchestrator_capabilities` by `setup-p3` (role names below). Never hardcode a slug. |
-| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Use `t3_thread_launch` only when the worker needs its own top-level thread, worktree, or branch. |
-| "each worker gets its own worktree or branch" | `t3_thread_launch` with `workspaceStrategy`: `{"type":"worktree","baseRef":...,"branch":...}`, `{"type":"existing_worktree","worktreePath":...}`, or `{"type":"root"}`. One writer per worktree. |
+| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task: `delegate_task` with `isolation: "worktree"` and, for a non-default base, `git fetch && git checkout <ref>` in the brief. Use `t3_thread_launch` only for a thread the user asked for or a long-lived sub-coordinator. |
+| "each worker gets its own worktree or branch" | `delegate_task` with `isolation: "worktree"`: each child gets its own checkout from the parent commit. One writer per worktree. A lane that needs another base opens its brief with `git fetch && git checkout <ref>`. |
 | `/loop`, poll loops, `scripts/watch-pr` | `watch_pull_request`: T3 watches the PR and wakes the thread on checks finishing, new comments, or conflicts. Arm it, end the turn, triage on wake. For other cadences use `schedule_task`. |
 | Hourly audit ticks, recurring runs | `schedule_task` with `{"type":"interval","everyMs":...}` or `{"type":"fixed_time","timeOfDay":...,"weekdays":[...]}`; `run_scheduled_task_now` for an immediate run. |
 | Stack bookkeeping with `gt`, manual PR lists | `link_pull_request` for every layer, immediately; `list_thread_pull_requests` returns the stack bottom to top. |
