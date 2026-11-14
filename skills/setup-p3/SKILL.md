@@ -39,29 +39,29 @@ Every real entry written must be in the `orchestrator_capabilities` result, unde
 
 ### 5. Write the file
 
-Write `p3-models.md` with a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels p3-mode uses. Write each entry as `<providerInstanceId>/<model>`, followed by its effort option and speed in parentheses (`<effort>, speed: <fastMode|serviceTier|n/a>`) when step 3(b) set them. A model with no catalog reasoning options gets `(speed: ...)` alone. Overwrite the whole file so re-runs stay idempotent. Shape:
+Write `p3-models.md` with a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels p3-mode uses. Write each `<entry>` as `<providerInstanceId>/<model>`, followed by its effort option and speed in parentheses (`<effort>, speed: <fastMode|serviceTier|n/a>`) when step 3(b) set them, or as the word `inherit-parent`. A model with no catalog reasoning options gets `(speed: ...)` alone. Separate the entries of a panel list with `; `, never a bare comma, so a role name or an entry can contain commas without ambiguity. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
 # p3 model configuration. One line per role. Delete a line to fall back to the skill default.
 # `inherit-parent` as a value: the role runs on the parent thread's model (omit the delegate_task model). Entries in a panel list still count toward its fan-out.
 # budget: large (xhigh)
-feature, refactoring: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-bug-fix: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-perf-issue: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-hillclimb: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-judgment and prose: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-hardest tasks: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-how explorer: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-how explainer: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-why investigators: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-why synthesizer: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-reflect tooling: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-reflect judgment, divergent, synthesizer: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-arena runners: <entry>, <entry>
-arena cross-judge pool: <entry>, <entry>
-swarm workers: <providerInstanceId>/<model> (<effort>, speed: <speed>)
-architect runners: <entry>, <entry>
-interrogate reviewers: <entry>, <entry>
+feature, refactoring: <entry>
+bug-fix: <entry>
+perf-issue: <entry>
+hillclimb: <entry>
+judgment and prose: <entry>
+hardest tasks: <entry>
+how explorer: <entry>
+how explainer: <entry>
+why investigators: <entry>
+why synthesizer: <entry>
+reflect tooling: <entry>
+reflect judgment, divergent, synthesizer: <entry>
+arena runners: <entry>; <entry>
+arena cross-judge pool: <entry>; <entry>
+swarm workers: <entry>
+architect runners: <entry>; <entry>
+interrogate reviewers: <entry>; <entry>
 ```
 
 ### 6. Confirm
