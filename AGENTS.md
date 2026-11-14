@@ -19,9 +19,9 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 | `/loop`, poll loops, `scripts/watch-pr` | `watch_pull_request`: T3 watches the PR and wakes the thread on checks finishing, new comments, or conflicts. Arm it, end the turn, triage on wake. For other cadences use `schedule_task`. |
 | Hourly audit ticks, recurring runs | `schedule_task` with `{"type":"interval","everyMs":...}` or `{"type":"fixed_time","timeOfDay":...,"weekdays":[...]}`; `run_scheduled_task_now` for an immediate run. |
 | Stack bookkeeping with `gt`, manual PR lists | `link_pull_request` for every layer, immediately; `list_thread_pull_requests` returns the stack bottom to top. |
-| `agent-transcripts/*.jsonl` mining | `t3_thread_read`, `t3_thread_search`; `t3_queue_list`/`t3_queue_read`/`t3_queue_edit`/`t3_queue_reorder`/`t3_queue_cancel`/`t3_queue_promote_to_steer` for queued input. |
-| `AskQuestion` | Ask plainly in the thread. `t3_pending_request_list`/`t3_pending_request_read`/`t3_pending_request_respond` answer questions in other threads. |
-| `control-ui`, `control-cli` (from cursor-team-kit) | `preview_*` browser tools and `device_*` simulator tools; `preview_recording_start`/`preview_recording_stop` and `device_screenshot` for evidence; `browser.preview` shows a file to the user. |
+| `agent-transcripts/*.jsonl` mining | `t3_thread_read`, `t3_thread_search`; `t3_queue` with `action` (`list`, `read`, `edit`, `reorder`, `cancel`, `promote_to_steer`) for queued input. |
+| `AskQuestion` | Ask plainly in the thread. `t3_pending_request` with `action` (`list`, `read`, `respond`) answers questions in other threads. |
+| `control-ui`, `control-cli` (from cursor-team-kit) | `preview_*` browser tools (`preview_act` with `action` for click, type, press, scroll) and `device_*` simulator tools; `preview_recording_start`/`preview_recording_stop` and `device_screenshot` for evidence; `html_preview` then `html_render` shows a page inline to the user. |
 | `~/.cursor/rules/pstack-models.mdc`, `/add-plugin` | `setup-p3` writes `p3-models.md`; install is a symlink of `skills/*` into `~/.agents/skills/` (see README). |
 | `poteto-mode`, `poteto-agent`, `poteto-help`, `setup-pstack` | `p3-mode`, `agents/p3-agent.md`, `p3-help`, `setup-p3`. |
 | Cursor custom modes ("press option+enter") | Skills are invoked by name (`/p3-mode`). No mode toggles. |
@@ -54,14 +54,15 @@ Keep these names exactly.
 ## T3 tool quick reference
 
 - Delegation: `delegate_task`, `task_status`, `task_cancel`, `orchestrator_capabilities`
-- Threads: `t3_thread_launch`, `create_threads`, `t3_thread_list`, `t3_thread_read`, `t3_thread_search`, `t3_thread_send`, `t3_thread_wait`, `t3_thread_fork`, `t3_thread_merge_back`, `t3_thread_interrupt`, `t3_thread_organize`, `t3_thread_update`, `t3_thread_configure`
+- Threads: `t3_thread_launch`, `create_threads`, `t3_thread_list`, `t3_thread_read`, `t3_thread_search`, `t3_thread_send`, `t3_thread_wait`, `t3_thread_transfer` (`action`: `fork`, `merge_back`, `status`), `t3_thread_interrupt`, `t3_thread_organize`, `t3_thread_update`, `t3_thread_configure`
 - Worktrees: `t3_worktree_status`, `t3_worktree_list`, `t3_worktree_handoff`
-- Pull requests: `link_pull_request`, `list_thread_pull_requests`, `watch_pull_request`, `unwatch_pull_request`, `unlink_pull_request`
-- Schedules: `schedule_task`, `list_scheduled_tasks`, `update_scheduled_task`, `delete_scheduled_task`, `run_scheduled_task_now`
-- Queue: `t3_queue_list`, `t3_queue_read`, `t3_queue_edit`, `t3_queue_reorder`, `t3_queue_cancel`, `t3_queue_promote_to_steer`
-- Preview: `preview_open`, `preview_navigate`, `preview_snapshot`, `preview_click`, `preview_type`, `preview_press`, `preview_scroll`, `preview_wait_for`, `preview_status`, `preview_resize`, `preview_set_appearance`, `preview_recording_start`, `preview_recording_stop`, `t3_preview_list`, `t3_preview_close`
+- Pull requests: `link_pull_request`, `link_pull_requests`, `list_thread_pull_requests`, `watch_pull_request`, `unwatch_pull_request`, `unlink_pull_request`, `unlink_pull_requests`
+- Schedules: `schedule_task` (pass `scheduledTaskId` to update), `list_scheduled_tasks`, `delete_scheduled_task`, `run_scheduled_task_now`
+- Queue: `t3_queue` with `action`: `list`, `read`, `edit`, `reorder`, `cancel`, `promote_to_steer`
+- Preview: `preview_open`, `preview_navigate`, `preview_snapshot`, `preview_act` (`action`: `click`, `type`, `hover`, `select`, `drag`, `upload`, `press`, `scroll`), `preview_evaluate`, `preview_dialog`, `preview_wait_for`, `preview_status`, `preview_resize`, `preview_set_appearance`, `preview_recording_start`, `preview_recording_stop`, `t3_preview_list`, `t3_preview_close`
 - Devices: `device_list`, `device_open`, `device_screenshot`, `device_close`
-- Pending requests: `t3_pending_request_list`, `t3_pending_request_read`, `t3_pending_request_respond`
+- Inline pages: `html_preview`, `html_render`
+- Pending requests: `t3_pending_request` with `action`: `list`, `read`, `respond`
 
 ## Definition of done for a skill
 
