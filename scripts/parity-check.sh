@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# parity-check.sh: check p3-stack against upstream pstack with the nine criteria of
-# docs/sync-spec-c742dd6.md §4 (P1..P8) plus P9 (verbatim files and pin-version). Read-only; reads UPSTREAM.md.
+# parity-check.sh: check p3-stack against upstream pstack with criteria P1..P8 of
+# docs/sync-spec-c742dd6.md §4, plus P9 (verbatim files byte-equal to upstream pin, pin-version). Read-only; reads UPSTREAM.md.
 #
 # usage: scripts/parity-check.sh [--to <rev>] [--upstream <path|url>] [--no-fetch] [--all]
 # prints one PASS / ALLOW / FAIL line per criterion (P4, P5, P8 judge each unit against its 对齐到 commit) (ALLOW = only whitelisted exceptions);

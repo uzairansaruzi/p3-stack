@@ -9,7 +9,7 @@ synced-on: 2026-11-14
 sync-target: c742dd61706fbacc1b95f1a20b7b988cf096ce6c
 sync-spec: docs/sync-spec-c742dd6.md
 
-`pin` 取「上游 main 上最后一个动过 subtree 的 commit」，不取仓库 HEAD。同步进行中 `pin` 取各行「对齐到」的最小值（此处仍是导入基线 4e5b1cf），全部对齐后才前进到 `sync-target`。
+`pin` 取「上游 main 上最后一个动过 subtree 的 commit」，不取仓库 HEAD。同步进行中 `pin` 取各行「对齐到」的最小值，全部对齐后才前进到 `sync-target`（本轮已于 2026-11-14 前进到 c742dd6）。
 `scripts/upstream-diff.sh` 与 `scripts/parity-check.sh` 只读本文件：头部 `key: value` 加下面四张表（前三张是 spec §5.1 的固定表，第四张是 parity-check 的可选扩展）。状态取值：`ported`（已落地）、`pending`（已决定移植、未落地）、`gap`（有意缺口）、`p3-only`（p3 独有）。
 
 ## 映射
@@ -101,7 +101,7 @@ sync-spec: docs/sync-spec-c742dd6.md
 | P5 | agents/p3-agent.md | T3 改写最深，B3 重写首段 |
 | P5 | skills/make-bot-ui/SKILL.md | T3 改写最深（preview_*/device_* 取代 control-ui） |
 | P5 | skills/p3-mode/playbooks/babysit.md | T3 改写最深（watch_pull_request 事件唤醒） |
-| P5 | skills/p3-mode/playbooks/worktree-cleanup.md | T3 改写最深（t3_worktree_* 取代审计脚本） |
+| P5 | skills/p3-mode/playbooks/worktree-cleanup.md | T3 改写最深（git worktree/gh/t3_thread_search 取代审计脚本） |
 | P5 | skills/setup-p3/SKILL.md | T3 改写最深（角色表与 providerInstanceId 写法） |
 | P6 | skills/setup-p3/SKILL.md | T3 侧有意加 disable-model-invocation |
 | P8 | agents/p3-agent.md | 基线已超出 |
@@ -110,7 +110,7 @@ sync-spec: docs/sync-spec-c742dd6.md
 | P8 | skills/show-me-your-work/SKILL.md | 基线已超出 |
 | P8 | skills/how/references/explorer-prompt.md | +2 行：T3 子 agent 只读说明 |
 | P8 | skills/ketchup-video/SKILL.md | D3=B：HTML 页 + preview_recording 录制步骤需写明 |
-| P8 | skills/p3-mode/playbooks/worktree-cleanup.md | +2 行：t3_worktree_* 取代审计脚本 |
+| P8 | skills/p3-mode/playbooks/worktree-cleanup.md | +2 行：git worktree/gh/t3_thread_search 取代审计脚本 |
 | P8 | skills/statechart/SKILL.md | +1 行：离线时设 TLA2TOOLS/JAVA 的出路 |
 | P8 | skills/statechart/references/render.md | +1 行：T3 下用图片语法或 html_render 展示 SVG |
 | P8 | skills/why/references/investigator-prompt.md | +2 行：T3 子任务可写，需在 brief 写明只读 |
