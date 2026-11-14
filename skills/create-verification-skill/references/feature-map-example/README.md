@@ -14,7 +14,7 @@ This directory is the maintained source for verifying the user-facing behavior o
 ## Driving conventions
 
 - Start every recipe from the baseline state unless its preconditions say otherwise.
-- Prefer ARIA roles and accessible names over CSS selectors or DOM position.
+- Prefer ARIA roles and accessible names over CSS selectors or DOM position. `preview_act` takes only `aria-ref=<ref>` locators, so find the named element in a `preview_snapshot`, pass its ref, and snapshot again after each navigation.
 - Treat every command as literal. Keep quoted names and flags unchanged.
 - Run browser actions through the `preview_*` tools.
 - Run terminal actions directly in the shell.

@@ -26,7 +26,7 @@ Give each slide one short subtitle line, about ten words, that says its point th
 
 The video is a recording of one self-contained HTML slide page. T3 has no video encoder, and none is needed.
 
-Build the page in a new temp directory outside the repo. Each slide is a full-width layer in a stage above a fixed-height subtitle strip. Draw pictures as inline SVG or HTML; embed captured screenshots as local images, which the static server below serves. Crossfade or slide between slides in CSS, about half a second. Use a 16:9 stage. The page stays blank until `window.startDeck()` runs, then plays every slide on its own timer, each for its hold, and sets `window.__deckDone = true` after the last hold. The last slide stays on screen.
+Build the page in a new temp directory outside the repo. Each slide is a full-width layer in a stage above a fixed-height subtitle strip. Draw pictures as inline SVG or HTML; embed captured screenshots as local images, which the static server below serves. Crossfade or slide between slides in CSS, about half a second. Use a 16:9 stage. The page stays blank until `window.startDeck()` runs, then plays every slide on its own timer, each for its hold, and sets `window.__deckDone = true` after the last hold. The last slide stays on screen. The page also exposes `window.showSlide(n)`, which shows slide `n` (from 1) alone, fully visible and with its subtitle, and stops any running timer, so step 4 can check each slide with `preview_evaluate` before recording.
 
 Set each hold in the page's own timeline: at least one second for each three words the slide adds, never less than two seconds. The hold is the time a slide is fully on screen, not counting the motion into or out of it. A slide adds its subtitle and each word that was not on the slide before it, including a label it changes. The first slide adds all its words. Words inside a screenshot do not count.
 
@@ -35,7 +35,7 @@ Serve and record:
 1. Serve the temp directory on loopback: `python3 -m http.server <port> --bind 127.0.0.1` in the background.
 2. `preview_open` with `target: {"kind":"environment-port","port":<port>,"path":"/deck.html"}`, `reuseExistingTab: false`, `open: false`. Keep the `tabId`.
 3. `preview_resize` with `mode: "freeform"`, `width: 1280`, `height: 720`.
-4. Check every slide before recording. Make each one visible, `preview_snapshot` it, and check at chat size that its subtitle is readable and covers nothing. Fix the page and check again. Then reload the page, so the deck is blank again.
+4. Check every slide before recording. Make each one visible with `preview_evaluate` calling `window.showSlide(n)`, `preview_snapshot` it, and check at chat size that its subtitle is readable and covers nothing. Fix the page and check again. Then reload the page, so the deck is blank again.
 5. `preview_recording_start`, then at once `preview_evaluate` with `window.startDeck()`. Recording length includes your own call latency, so the clip has a short idle lead-in and tail on the blank page and the last slide. Make no calls between these two.
 6. `preview_evaluate` with `awaitPromise: true` on a promise that polls `window.__deckDone` every 200 ms and resolves when it is true.
 7. `preview_recording_stop`. It returns the video's local path (mp4, at most 50 MiB). Check that the file exists and is not empty.

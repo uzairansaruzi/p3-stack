@@ -12,7 +12,7 @@ Invoke when the user says "reflect" or "/reflect". Skip when the conversation is
 
 ## 1. Locate the active transcript
 
-The transcript is the current T3 thread. Read it with `t3_thread_read`; use `t3_thread_search` to pull exact passages. Do not search across other threads. That crosses workspace boundaries and reads private chats from unrelated projects.
+The transcript is the current T3 thread. Find its id with `t3_thread_search` on the thread's title or the task's first words, or with `t3_thread_list` (newest first), and confirm it by its first user message. If you cannot get the id, use the tight digest described below. Read it with `t3_thread_read`; use `t3_thread_search` to pull exact passages. Do not search across other threads. That crosses workspace boundaries and reads private chats from unrelated projects.
 
 Reviewers get only their brief, never the parent's context. Pass the thread id and tell them to read it with `t3_thread_read`, or pass a tight digest of the session instead.
 
