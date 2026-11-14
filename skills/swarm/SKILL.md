@@ -32,7 +32,7 @@ If a worker drops out, proceed with N-1 and note it.
 
 ## Phase C: Aggregate
 
-Drain with `task_status` until every worker is terminal. Drop a result that does not record the SHAs and method its brief names, and respawn that worker once. After a second miss, record a gap. A gap does not count as a pass. For coverage, every required slice needs a result. For a race, apply the selection rule declared up front. Use first pass, rank all, or best-of. Do not paste raw worker dumps.
+Drain per the Subagents section of the **p3-mode** skill: end the turn after the spawn, and read each worker's result with `task_status` when its completion wakes you, until every worker is terminal. Drop a result that does not record the SHAs and method its brief names, and respawn that worker once. After a second miss, record a gap. A gap does not count as a pass. For coverage, every required slice needs a result. For a race, apply the selection rule declared up front. Use first pass, rank all, or best-of. Do not paste raw worker dumps.
 
 ## Phase D: Report
 
