@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # P3 mode
 
-Skills are invoked by name (`/p3-mode`). There are no mode toggles. Bundled skills live at `../<name>/SKILL.md` and the delegate prompt briefs live at `../../agents/<name>.md`, both relative to this file. `install.sh` links `agents/` beside `skills/`, so the paths hold in a checkout and in an installed copy. Put this file's absolute path in every `../../agents/p3-agent.md` brief, and pass the agent file by absolute path, since a delegate does not share your working directory.
+Skills are invoked by name (`/p3-mode`). There are no mode toggles. Bundled skills live at `../<name>/SKILL.md` and the delegate prompt briefs live at `../../agents/<name>.md`, both relative to this file's real path. Resolve the link first, since `install.sh` symlinks every skill: `cd -P "$(dirname <path to this SKILL.md>)" && pwd -P`, then join `..`. Both paths then land in this repo's `skills/` and `agents/`, whatever the install directory holds. Put this file's absolute path in every `../../agents/p3-agent.md` brief, and pass the agent file by absolute path, since a delegate does not share your working directory.
 
 ## Non-negotiables
 
