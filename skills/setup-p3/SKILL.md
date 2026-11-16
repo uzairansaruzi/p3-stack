@@ -27,7 +27,7 @@ The roles are the labels shown in step 5. If `p3-models.md` already exists at th
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** Build the working table. On a fresh run, give code roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`), the explorer, investigator, and swarm roles, and `reflect tooling` the fastest strong coding model detected. Give `judgment and prose`, `hardest tasks`, the explainer, and the synthesizers the most capable model detected. Fill each panel role with one entry per distinct model family detected, up to two. A family comes from the model id (Claude, GPT, DeepSeek, GLM, Kimi), not from the provider that serves it. On a re-run, keep any role the user changed.
+**(b) Apply it.** Build the working table. On a fresh run, give code roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`), the swarm role, and `reflect tooling` the fastest strong coding model detected. Give `judgment and prose`, `hardest tasks`, and the synthesizers the most capable model detected. Fill each panel role with one entry per distinct model family detected, up to two. A family comes from the model id (Claude, GPT, DeepSeek, GLM, Kimi), not from the provider that serves it. On a re-run, keep any role the user changed.
 
 When the catalog exposes reasoning options for a model, set each real entry's effort option from the budget: `unlimited`, `large`, `medium`, and `small` take `max`, `xhigh`, `high`, or `medium`. The ladder is `max` > `xhigh` > `high` > `medium` > `low`. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. `inherit-parent` does not change. Under `unlimited`, a model whose top option is `xhigh` stays at `xhigh`. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded. Speed does not follow the budget. For each real entry, read the model's speed option id from the catalog (`fastMode` or `serviceTier`; it follows the provider instance's driver, not the model family). Record that option's name as the entry's `speed`, or `n/a` when the model has none. The entry's default stays standard speed. The parent turns fast on at spawn time, only when someone is blocked right now, per the Subagents section of the **p3-mode** skill. With `n/a` the parent adjusts effort only.
 
@@ -51,10 +51,6 @@ perf-issue: <entry>
 hillclimb: <entry>
 judgment and prose: <entry>
 hardest tasks: <entry>
-how explorer: <entry>
-how explainer: <entry>
-why investigators: <entry>
-why synthesizer: <entry>
 reflect tooling: <entry>
 reflect judgment, divergent, synthesizer: <entry>
 arena runners: <entry>; <entry>

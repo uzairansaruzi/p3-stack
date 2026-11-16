@@ -1,6 +1,6 @@
 # p3-stack
 
-p3-stack is [pstack](https://github.com/cursor/plugins/tree/main/pstack) rebuilt for T3 Code, synced to upstream `c742dd6` (see [UPSTREAM.md](UPSTREAM.md)). Same engineering discipline, native T3 orchestration.
+p3-stack is [pstack](https://github.com/cursor/plugins/tree/main/pstack) rebuilt for T3 Code, synced to upstream `bf0c7cd` (see [UPSTREAM.md](UPSTREAM.md)). Same engineering discipline, native T3 orchestration.
 
 pstack is poteto's answer to AI slop code. It turns an agent into an engineering team: one mode skill that routes to playbooks, principles that ground every decision, and verification strict enough that you can parallelize with confidence. p3-stack keeps that system and rewires the mechanics to T3 Code's primitives:
 
