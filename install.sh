@@ -33,12 +33,16 @@ usage() {
   cat <<'EOF'
 usage: ./install.sh [options]
 
-Installs every skills/<name> as a symlink into each user-level skills directory
-that already exists on this machine:
+Installs every skills/<name> as a symlink into the targets declared in
+install.targets (one "<dir>[|<label>]" per line; ~ is expanded), or into every
+user-level skills directory that already exists when that file is absent:
 
   ~/.agents/skills         codex, tcodex, T3 Codex   (created when missing)
   <config home>/skills     claude, tclaude, T3 Claude, for an existing
                            $CLAUDE_CONFIG_DIR, ~/.tclaude, or ~/.claude
+
+Set P3_TARGETS_FILE to another file to use it, or to an empty string to ignore
+install.targets and fall back to the auto-detection above.
 
 options:
   --target <dir>     install into <dir> instead of auto-detecting (repeatable)
@@ -149,6 +153,20 @@ replace_wanted() {
 
 # --- targets -----------------------------------------------------------------
 
+# install.targets: one "<dir>[|<label>]" per line; blank lines and # comments
+# are ignored. P3_TARGETS_FILE overrides the path, an empty value disables it.
+TARGETS_FILE="${P3_TARGETS_FILE-$REPO/install.targets}"
+
+trim() { printf '%s' "$1" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'; }
+
+expand_home() {
+  case "$1" in
+    '~') printf '%s\n' "$HOME" ;;
+    '~/'*) printf '%s\n' "$HOME/${1#\~/}" ;;
+    *) printf '%s\n' "$1" ;;
+  esac
+}
+
 T_DIR=()
 T_CANON=()
 T_LABEL=()
@@ -215,6 +233,16 @@ if [ ${#EXPLICIT_TARGETS[@]} -gt 0 ] || [ ${#PROJECTS[@]} -gt 0 ]; then
     add_target "$(to_abs "$p")/.agents/skills" "project, codex"
     add_target "$(to_abs "$p")/.claude/skills" "project, claude"
   done
+elif [ -n "${TARGETS_FILE:-}" ] && [ -f "$TARGETS_FILE" ]; then
+  while IFS='|' read -r raw_path raw_label; do
+    path="$(trim "$(expand_home "$raw_path")")"
+    label="$(trim "$raw_label")"
+    case "$path" in
+      ''|'#'*) continue ;;
+    esac
+    add_target "$path" "${label:-configured target}"
+  done < "$TARGETS_FILE"
+  [ ${#T_DIR[@]} -gt 0 ] || die "no install target declared in $TARGETS_FILE"
 else
   add_target "$HOME/.agents/skills" "codex, tcodex, T3 Codex"
   if [ -n "${CLAUDE_CONFIG_DIR:-}" ] && [ -d "$CLAUDE_CONFIG_DIR" ]; then

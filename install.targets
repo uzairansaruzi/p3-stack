@@ -1,0 +1,12 @@
+# 安装目标：每行一个 "<目录>[|<标签>]"，~ 会展开为 $HOME。
+#
+# 本 fork 的部署口径是「中心库 + 每个 harness 一个目录」：
+#   ~/.tclaude/skills  tclaude / T3 Claude 线程读这里
+#   ~/.tcodex/skills   codex / tcodex / T3 Codex 线程读这里（codex 的 CODEX_HOME）
+# 不再写 ~/.agents/skills：那是 p3-stack 上游的三处入口之一，会与上面两处重复。
+#
+# 需要按机器调整时直接改本文件；临时换一套用 P3_TARGETS_FILE=<文件>，
+# 或完全不看本文件用 ./install.sh --target <目录>。
+
+~/.tclaude/skills|tclaude, T3 Claude
+~/.tcodex/skills|codex, tcodex, T3 Codex

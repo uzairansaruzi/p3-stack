@@ -34,7 +34,7 @@ no() {
 run() {
   local h="$1"
   shift
-  env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$h" "$INSTALL" "$@"
+  env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$h" P3_TARGETS_FILE= "$INSTALL" "$@"
 }
 
 assert_link() { # label path expected
@@ -165,14 +165,14 @@ assert_absent "our skill link is gone" "$H/.claude/skills/p3-mode"
 
 H="$(tmp)"
 C="$(tmp)"
-out="$(env -u CODEX_HOME HOME="$H" CLAUDE_CONFIG_DIR="$C" "$INSTALL")"
+out="$(env -u CODEX_HOME HOME="$H" CLAUDE_CONFIG_DIR="$C" P3_TARGETS_FILE= "$INSTALL")"
 assert_has "a custom CLAUDE_CONFIG_DIR is a target" "$out" "$C/skills"
 assert_count "the custom config dir is filled" "$C/skills" "$SKILL_COUNT"
 assert_absent "an absent ~/.claude is not created" "$H/.claude"
 
 H="$(tmp)"
 mkdir -p "$H/.tclaude"
-out="$(env -u CODEX_HOME HOME="$H" CLAUDE_CONFIG_DIR="$H/.tclaude" "$INSTALL")"
+out="$(env -u CODEX_HOME HOME="$H" CLAUDE_CONFIG_DIR="$H/.tclaude" P3_TARGETS_FILE= "$INSTALL")"
 n="$(printf '%s\n' "$out" | grep -c '~/.tclaude/skills')"
 [ "$n" = 1 ] && ok "CLAUDE_CONFIG_DIR equal to ~/.tclaude is listed once" \
   || no "CLAUDE_CONFIG_DIR equal to ~/.tclaude is listed once" "listed $n times"
@@ -266,7 +266,7 @@ assert_link "a dangling link in ~/.tcodex does not block teach" "$H/.agents/skil
 
 H="$(tmp)"
 mkdir -p "$H/.claude"
-out="$(env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H/" "$INSTALL")"
+out="$(env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H/" P3_TARGETS_FILE= "$INSTALL")"
 assert_has "HOME/ prints ~/.claude/skills" "$out" "~/.claude/skills"
 
 # --- HOME and targets with spaces --------------------------------------------
@@ -282,7 +282,7 @@ H="$(tmp)"
 BIN="$(tmp)"
 ln -s "$INSTALL" "$BIN/p3-install"
 mkdir -p "$H/.claude"
-env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H" "$BIN/p3-install" >/dev/null
+env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H" P3_TARGETS_FILE= "$BIN/p3-install" >/dev/null
 rc=$?
 [ "$rc" = 0 ] && ok "a symlinked install.sh exits 0" || no "a symlinked install.sh exits 0" "exit $rc"
 assert_link "a symlinked install.sh links into the repo" "$H/.claude/skills/p3-mode" "$ROOT/skills/p3-mode"
@@ -296,7 +296,7 @@ E="$(tmp)"
 mkdir -p "$H/.codex/skills" "$X/skills"
 ln -s "$E" "$H/.codex/skills/tdd"
 ln -s "$E" "$X/skills/teach"
-env -u CLAUDE_CONFIG_DIR HOME="$H" CODEX_HOME="$X" "$INSTALL" >/dev/null
+env -u CLAUDE_CONFIG_DIR HOME="$H" CODEX_HOME="$X" P3_TARGETS_FILE= "$INSTALL" >/dev/null
 assert_absent "~/.codex/skills/tdd blocks ~/.agents/skills/tdd" "$H/.agents/skills/tdd"
 assert_absent "CODEX_HOME/skills/teach blocks ~/.agents/skills/teach" "$H/.agents/skills/teach"
 
@@ -309,6 +309,43 @@ snap1="$(snapshot "$H")"
 run "$H" --uninstall --dry-run >/dev/null
 snap2="$(snapshot "$H")"
 [ "$snap1" = "$snap2" ] && ok "--uninstall --dry-run changes nothing" || no "--uninstall --dry-run changes nothing"
+
+# --- install.targets 指定安装路径 -------------------------------------------
+
+H="$(tmp)"
+CFG="$(tmp)/targets"
+printf '# 注释行\n~/.tclaude/skills|tclaude\n\n~/.tcodex/skills|codex\n' > "$CFG"
+out="$(env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H" P3_TARGETS_FILE="$CFG" "$INSTALL")"
+rc=$?
+[ "$rc" = 0 ] && ok "config mode exits 0" || no "config mode exits 0" "exit $rc"
+assert_has "config target is named" "$out" "~/.tcodex/skills"
+assert_has "config label is used" "$out" "codex"
+assert_count "configured claude dir holds every skill" "$H/.tclaude/skills" "$SKILL_COUNT"
+assert_count "configured codex dir holds every skill" "$H/.tcodex/skills" "$SKILL_COUNT"
+assert_absent "config mode never creates ~/.agents" "$H/.agents"
+assert_absent "config mode does not touch ~/.claude" "$H/.claude"
+
+# 仓库自带的 install.targets 是默认值
+H="$(tmp)"
+out="$(env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H" "$INSTALL" --dry-run)"
+assert_has "repo install.targets is used by default" "$out" "~/.tclaude/skills"
+assert_has "repo install.targets covers codex" "$out" "~/.tcodex/skills"
+case "$out" in *".agents"*) no "repo install.targets drops ~/.agents" "$out" ;; *) ok "repo install.targets drops ~/.agents" ;; esac
+
+# 配置为空时报错退出 2，而不是静默什么都不做
+H="$(tmp)"
+EMPTY="$(tmp)/empty"
+: > "$EMPTY"
+env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H" P3_TARGETS_FILE="$EMPTY" "$INSTALL" >/dev/null 2>&1
+rc=$?
+[ "$rc" = 2 ] && ok "an empty targets file exits 2" || no "an empty targets file exits 2" "exit $rc"
+
+# --target 仍然优先于配置文件
+H="$(tmp)"
+T="$(tmp)/custom"
+env -u CLAUDE_CONFIG_DIR -u CODEX_HOME HOME="$H" P3_TARGETS_FILE="$CFG" "$INSTALL" --target "$T" >/dev/null
+assert_count "--target overrides the config file" "$T" "$SKILL_COUNT"
+assert_absent "--target keeps the config targets untouched" "$H/.tclaude"
 
 printf '\n%d passed, %d failed\n' "$PASS" "$FAIL"
 [ "$FAIL" = 0 ]

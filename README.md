@@ -22,12 +22,20 @@ cd p3-stack && ./install.sh
 
 Then open a new thread and run `/setup-p3`, which maps each role to a model.
 
-One command covers every harness already on the machine, at user level:
+One command covers every harness already on the machine, at user level. When
+`install.targets` exists, its lines (`<dir>[|<label>]`, `~` expanded) are the
+targets; otherwise the installer auto-detects them:
 
 | Directory | Harness |
 |---|---|
-| `~/.agents/skills/` | codex, tcodex, T3 Codex (created when missing) |
+| `~/.agents/skills/` | codex, tcodex, T3 Codex (created when missing) — auto-detect only |
 | `<config home>/skills/` | claude, tclaude, T3 Claude, for each of `$CLAUDE_CONFIG_DIR`, `~/.tclaude`, `~/.claude` that exists |
+
+This fork ships an `install.targets` with `~/.tclaude/skills` and
+`~/.tcodex/skills` only: the AgentBro distribution model is one center library
+plus one directory per harness, and `~/.agents/skills` would be a third entry
+holding the same links. Point `P3_TARGETS_FILE` at another file to swap the
+list, or set it empty to fall back to auto-detection.
 
 A name that is already taken is skipped and reported, never deleted or replaced. A name counts as p3-stack's only when it is a symlink into this repo. Codex reads `~/.tcodex/skills/`, `~/.codex/skills/`, and `$CODEX_HOME/skills/` beside `~/.agents/skills/`, so a name taken in any of those is skipped too. `--replace <name>` takes one over and prints what it pointed at first. `--target <dir>` installs somewhere else, `--project /path/to/repo` installs into `<repo>/.agents/skills/` and `<repo>/.claude/skills/`, `--uninstall` removes only the links that point into this repo, and `--dry-run` prints the plan with no changes.
 
