@@ -18,7 +18,7 @@ Work in a scratch folder outside the repo. Write a TLA+ spec and its config. The
 
 `<skill dir>` is this skill's folder, such as `~/.agents/skills/statechart`.
 
-`scripts/statechart.ts` is TypeScript, so run it with a runtime that can execute TypeScript. The wrapper picks Node 22.18 or later, Bun, or Deno, and says so when none fits.
+`scripts/statechart.ts` is TypeScript, so run it with a runtime that can execute TypeScript. The wrapper picks Node 22.18 or later, Bun, or Deno, and says so when none fits. On native Windows, run `node --disable-warning=ExperimentalWarning <skill dir>/scripts/statechart.ts` with Node 22.18 to 22.x, or Node 23.6 or later.
 
 The first run installs TLC and Java with mise and needs the network. Offline, or without mise, set `TLA2TOOLS` to the path of `tla2tools.jar` and `JAVA` to a Java 11 or later binary, then run the same command.
 
